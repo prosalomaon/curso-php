@@ -1,0 +1,170 @@
+:root {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --border-color: #000000;
+  --hover-bg: #f8f8f8;
+}
+
+body {
+  font-family: 'Courier New', Courier, monospace;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  margin: 0;
+  padding: 40px 20px;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+header {
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 20px;
+  margin-bottom: 40px;
+}
+
+h1 {
+  font-size: 2.5em;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+p.subtitle {
+  font-weight: bold;
+  margin-top: 5px;
+  text-transform: uppercase;
+}
+
+.week-container {
+  border: 1px solid var(--border-color);
+  margin-bottom: 20px;
+  padding: 20px;
+  transition: background-color 0.2s ease;
+}
+
+.week-container:hover {
+  background-color: var(--hover-bg);
+}
+
+.week-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  text-transform: capitalize;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+  margin-top: 0;
+}
+
+.file-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.file-list li {
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+a {
+  color: var(--text-color);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+  padding-bottom: 2px;
+}
+
+a:hover {
+  border-bottom: 2px solid var(--text-color);
+}
+
+footer {
+  margin-top: 50px;
+  text-align: center;
+  font-size: 0.8em;
+  border-top: 1px solid var(--border-color);
+  padding-top: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+/* Markdown Specific Styles */
+.markdown-content {
+  line-height: 1.8;
+}
+
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3 {
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.3em;
+  text-transform: none;
+  font-size: 1.5em;
+  letter-spacing: 0;
+}
+
+.markdown-content h1 {
+  font-size: 2em;
+}
+
+.markdown-content code {
+  background-color: var(--hover-bg);
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-family: inherit;
+  border: 1px solid #ddd;
+}
+
+.markdown-content pre {
+  background-color: var(--hover-bg);
+  padding: 15px;
+  overflow: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.markdown-content pre code {
+  background-color: transparent;
+  padding: 0;
+  border: none;
+}
+
+.markdown-content blockquote {
+  margin: 0;
+  padding: 10px 20px;
+  border-left: 4px solid var(--border-color);
+  background-color: var(--hover-bg);
+}
+
+.markdown-content ul,
+.markdown-content ol {
+  margin-top: 0;
+  margin-bottom: 1em;
+  padding-left: 2em;
+}
+
+.markdown-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1em;
+}
+
+.markdown-content th,
+.markdown-content td {
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  text-align: left;
+}
+
+.markdown-content th {
+  background-color: var(--hover-bg);
+}
