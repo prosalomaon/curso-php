@@ -57,4 +57,21 @@ require_once __DIR__ . '/../includes/header.php';
     </tr>
 </table>
 
+
+<div class="info-box references-section" style="margin-top: 40px; border-left-color: #007BFF;">
+    <h3 style="margin-top:0;">References & Official Documentation</h3>
+    <ul>
+        <li><a href="https://www.php.net/manual/pt_BR/language.oop5.php" target="_blank">PHP Manual: Intro to OOP</a></li>
+    </ul>
+</div>
+
+<div class="content-box snippets-section" style="background: var(--hover-bg); margin-top:20px;">
+    <h3 style="margin-top:0;">Useful Snippets</h3>
+    <pre style="margin:0;"><code>&lt;?php
+class User {
+    public string $name;
+}
+?&gt;</code></pre>
+</div>
+
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

@@ -30,4 +30,19 @@ require_once __DIR__ . '/../includes/header.php';
     This logic executes purely inside the MySQL/MariaDB RAM in 3 milliseconds, rather than PHP hammering the network with thousands of separate connection requests natively!
 </div>
 
+
+<div class="info-box references-section" style="margin-top: 40px; border-left-color: #007BFF;">
+    <h3 style="margin-top:0;">References & Official Documentation</h3>
+    <ul>
+        <li><a href="https://www.php.net/manual/pt_BR/book.pdo.php" target="_blank">PHP Manual: JOIN Queries</a></li>
+    </ul>
+</div>
+
+<div class="content-box snippets-section" style="background: var(--hover-bg); margin-top:20px;">
+    <h3 style="margin-top:0;">Useful Snippets</h3>
+    <pre style="margin:0;"><code>SELECT u.name, p.title 
+FROM users u 
+JOIN posts p ON u.id = p.user_id;</code></pre>
+</div>
+
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

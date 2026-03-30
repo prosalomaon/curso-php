@@ -38,4 +38,21 @@ require_once __DIR__ . '/../includes/header.php';
     <strong>Log Levels:</strong> DEBUG, INFO, NOTICE, WARNING, ERROR, CRITICAL, ALERT, EMERGENCY. Different handlers can be attached simultaneously (e.g. Save everything to disk, but email the team ONLY on EMERGENCY).
 </div>
 
+
+<div class="info-box references-section" style="margin-top: 40px; border-left-color: #007BFF;">
+    <h3 style="margin-top:0;">References & Official Documentation</h3>
+    <ul>
+        <li><a href="https://www.php.net/manual/pt_BR/book.curl.php" target="_blank">PHP Manual: External APIs (cURL)</a></li>
+    </ul>
+</div>
+
+<div class="content-box snippets-section" style="background: var(--hover-bg); margin-top:20px;">
+    <h3 style="margin-top:0;">Useful Snippets</h3>
+    <pre style="margin:0;"><code>&lt;?php
+$ch = curl_init(&#039;https://api.github.com/users/octocat&#039;);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$response = curl_exec($ch);
+?&gt;</code></pre>
+</div>
+
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

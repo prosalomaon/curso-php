@@ -39,4 +39,22 @@ require_once __DIR__ . '/../includes/header.php';
     <h1>$<?= number_format($cartTotal, 2) ?></h1>
 </div>
 
+
+<div class="info-box references-section" style="margin-top: 40px; border-left-color: #007BFF;">
+    <h3 style="margin-top:0;">References & Official Documentation</h3>
+    <ul>
+        <li><a href="https://www.php.net/manual/pt_BR/functions.anonymous.php" target="_blank">PHP Manual: Scope &amp; Anonymous</a></li>
+    </ul>
+</div>
+
+<div class="content-box snippets-section" style="background: var(--hover-bg); margin-top:20px;">
+    <h3 style="margin-top:0;">Useful Snippets</h3>
+    <pre style="margin:0;"><code>&lt;?php
+$tax = 0.5;
+$calc = function($price) use ($tax) {
+    return $price + ($price * $tax);
+};
+?&gt;</code></pre>
+</div>
+
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

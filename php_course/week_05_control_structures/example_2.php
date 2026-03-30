@@ -48,4 +48,21 @@ require_once __DIR__ . '/../includes/header.php';
     </form>
 </div>
 
+
+<div class="info-box references-section" style="margin-top: 40px; border-left-color: #007BFF;">
+    <h3 style="margin-top:0;">References & Official Documentation</h3>
+    <ul>
+        <li><a href="https://www.php.net/manual/pt_BR/language.control-structures.php" target="_blank">PHP Manual: Control Structures</a></li>
+    </ul>
+</div>
+
+<div class="content-box snippets-section" style="background: var(--hover-bg); margin-top:20px;">
+    <h3 style="margin-top:0;">Useful Snippets</h3>
+    <pre style="margin:0;"><code>&lt;?php
+if ($age &gt;= 18) {
+    echo &#039;Access Granted&#039;;
+}
+?&gt;</code></pre>
+</div>
+
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

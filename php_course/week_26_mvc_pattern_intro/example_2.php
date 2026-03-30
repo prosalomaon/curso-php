@@ -38,4 +38,20 @@ require_once __DIR__ . '/../includes/header.php';
     The application logic inherits cleanly. A <code>BaseController</code> can contain universal methods like <code>redirect()</code>, <code>validate()</code>, or <code>generateJson()</code>!
 </div>
 
+
+<div class="info-box references-section" style="margin-top: 40px; border-left-color: #007BFF;">
+    <h3 style="margin-top:0;">References & Official Documentation</h3>
+    <ul>
+        <li><a href="https://www.php.net/manual/pt_BR/language.oop5.architecture.php" target="_blank">PHP Manual: MVC Pattern</a></li>
+    </ul>
+</div>
+
+<div class="content-box snippets-section" style="background: var(--hover-bg); margin-top:20px;">
+    <h3 style="margin-top:0;">Useful Snippets</h3>
+    <pre style="margin:0;"><code>&lt;?php
+// Router invokes Controller, passes Model data to View
+$controller = new UserController(new UserModel());
+?&gt;</code></pre>
+</div>
+
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

@@ -40,4 +40,20 @@ require_once __DIR__ . '/../includes/header.php';
     <strong>Relational Integrity:</strong> The <code>ON DELETE CASCADE</code> instructs the database engine to instantly wipe all <code>posts</code> belonging to a user if the user's ID is deleted, preventing "Orphaned Records" safely without PHP intervening.
 </div>
 
+
+<div class="info-box references-section" style="margin-top: 40px; border-left-color: #007BFF;">
+    <h3 style="margin-top:0;">References & Official Documentation</h3>
+    <ul>
+        <li><a href="https://www.php.net/manual/pt_BR/book.pdo.php" target="_blank">PHP Manual: SQL Basics</a></li>
+    </ul>
+</div>
+
+<div class="content-box snippets-section" style="background: var(--hover-bg); margin-top:20px;">
+    <h3 style="margin-top:0;">Useful Snippets</h3>
+    <pre style="margin:0;"><code>CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL
+);</code></pre>
+</div>
+
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

@@ -42,4 +42,21 @@ require_once __DIR__ . '/../includes/header.php';
     <button type="submit" style="width:100%; <?= $middlewareLog && !$canAccessAdmin ? 'background:red;border-color:red;' : '' ?>">Execute Path Resolution</button>
 </form>
 
+
+<div class="info-box references-section" style="margin-top: 40px; border-left-color: #007BFF;">
+    <h3 style="margin-top:0;">References & Official Documentation</h3>
+    <ul>
+        <li><a href="https://www.php.net/manual/pt_BR/function.password-verify.php" target="_blank">PHP Manual: Authentication</a></li>
+    </ul>
+</div>
+
+<div class="content-box snippets-section" style="background: var(--hover-bg); margin-top:20px;">
+    <h3 style="margin-top:0;">Useful Snippets</h3>
+    <pre style="margin:0;"><code>&lt;?php
+if (password_verify($passwordAtmpt, $userHash)) {
+    $_SESSION[&#039;auth&#039;] = true;
+}
+?&gt;</code></pre>
+</div>
+
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

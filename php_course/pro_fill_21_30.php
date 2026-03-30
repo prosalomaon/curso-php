@@ -905,10 +905,31 @@ foreach ($dirs as $dir) {
     preg_match('/week_0*(\d+)/', basename($dir), $matches);
     if (!isset($matches[1])) continue;
     $weekNum = (int)$matches[1];
-    
     if (isset($examples[$weekNum])) {
-        file_put_contents($dir . '/example_1.php', $examples[$weekNum]['ex1']);
-        file_put_contents($dir . '/example_2.php', $examples[$weekNum]['ex2']);
+        $refs = require __DIR__ . '/references_data.php';
+        $refData = $refs[$weekNum] ?? ['url' => 'https://www.php.net/manual/pt_BR/', 'title' => 'Official Documentation', 'snippet' => '// Custom snippet'];
+        
+        $injectionHtml = '
+<div class="info-box references-section" style="margin-top: 40px; border-left-color: #007BFF;">
+    <h3 style="margin-top:0;">References & Official Documentation</h3>
+    <ul>
+        <li><a href="' . htmlspecialchars($refData['url']) . '" target="_blank">PHP Manual: ' . htmlspecialchars($refData['title']) . '</a></li>
+    </ul>
+</div>
+
+<div class="content-box snippets-section" style="background: var(--hover-bg); margin-top:20px;">
+    <h3 style="margin-top:0;">Useful Snippets</h3>
+    <pre style="margin:0;"><code>' . htmlspecialchars($refData['snippet']) . '</code></pre>
+</div>
+';
+
+        $footerRequire = "<?php require_once __DIR__ . '/../includes/footer.php'; ?>";
+        
+        $ex1 = str_replace($footerRequire, $injectionHtml . "\n" . $footerRequire, $examples[$weekNum]['ex1']);
+        $ex2 = str_replace($footerRequire, $injectionHtml . "\n" . $footerRequire, $examples[$weekNum]['ex2']);
+
+        file_put_contents($dir . '/example_1.php', $ex1);
+        file_put_contents($dir . '/example_2.php', $ex2);
     }
 }
 echo "Professional Layouts generated & applied to Weeks 21-30.\n";

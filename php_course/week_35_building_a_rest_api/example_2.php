@@ -42,4 +42,21 @@ require_once __DIR__ . '/../includes/header.php';
     <strong>HTTP 429:</strong> Never let users infinite-loop an API request. Implementing Rate Limiting mathematically protects your database from DDoS attacks!
 </div>
 
+
+<div class="info-box references-section" style="margin-top: 40px; border-left-color: #007BFF;">
+    <h3 style="margin-top:0;">References & Official Documentation</h3>
+    <ul>
+        <li><a href="https://www.php.net/manual/pt_BR/reserved.variables.server.php" target="_blank">PHP Manual: Building APIs</a></li>
+    </ul>
+</div>
+
+<div class="content-box snippets-section" style="background: var(--hover-bg); margin-top:20px;">
+    <h3 style="margin-top:0;">Useful Snippets</h3>
+    <pre style="margin:0;"><code>&lt;?php
+if ($_SERVER[&#039;REQUEST_METHOD&#039;] === &#039;POST&#039;) {
+    // Create resource
+}
+?&gt;</code></pre>
+</div>
+
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

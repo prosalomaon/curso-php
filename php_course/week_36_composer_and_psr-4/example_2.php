@@ -45,4 +45,20 @@ require_once __DIR__ . '/../includes/header.php';
     In modern PHP 8+, Developers often install <strong>GuzzleHTTP</strong> via Composer, which totally wraps the nasty <code>curl_setopt</code> logic into beautiful Object-Oriented methods (<code>$client->post('/charges', ['json' => $data]);</code>).
 </div>
 
+
+<div class="info-box references-section" style="margin-top: 40px; border-left-color: #007BFF;">
+    <h3 style="margin-top:0;">References & Official Documentation</h3>
+    <ul>
+        <li><a href="https://www.php.net/manual/pt_BR/language.namespaces.rationale.php" target="_blank">PHP Manual: Composer &amp; PSR-4</a></li>
+    </ul>
+</div>
+
+<div class="content-box snippets-section" style="background: var(--hover-bg); margin-top:20px;">
+    <h3 style="margin-top:0;">Useful Snippets</h3>
+    <pre style="margin:0;"><code>&lt;?php
+require &#039;vendor/autoload.php&#039;;
+use App\Models\User;
+?&gt;</code></pre>
+</div>
+
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

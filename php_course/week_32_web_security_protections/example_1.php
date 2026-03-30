@@ -39,4 +39,20 @@ require_once __DIR__ . '/../includes/header.php';
     Using <code>use</code> at the top of the file prevents the code from becoming messy. Instead of writing <code>$u = new \App\Models\User()</code>, we simply write <code>$u = new User()</code>.
 </div>
 
+
+<div class="info-box references-section" style="margin-top: 40px; border-left-color: #007BFF;">
+    <h3 style="margin-top:0;">References & Official Documentation</h3>
+    <ul>
+        <li><a href="https://www.php.net/manual/pt_BR/security.php" target="_blank">PHP Manual: Web Security</a></li>
+    </ul>
+</div>
+
+<div class="content-box snippets-section" style="background: var(--hover-bg); margin-top:20px;">
+    <h3 style="margin-top:0;">Useful Snippets</h3>
+    <pre style="margin:0;"><code>&lt;?php
+// Prevent XSS
+$safe = htmlspecialchars($unsafeStr, ENT_QUOTES, &#039;UTF-8&#039;);
+?&gt;</code></pre>
+</div>
+
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

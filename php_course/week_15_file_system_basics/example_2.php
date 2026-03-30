@@ -58,4 +58,19 @@ require_once __DIR__ . '/../includes/header.php';
     Instead of writing <code>fopen()</code> twenty times, we simply write <code>$logger->info(...)</code> and the application handles the complex file-locking mechanics.
 </div>
 
+
+<div class="info-box references-section" style="margin-top: 40px; border-left-color: #007BFF;">
+    <h3 style="margin-top:0;">References & Official Documentation</h3>
+    <ul>
+        <li><a href="https://www.php.net/manual/pt_BR/ref.filesystem.php" target="_blank">PHP Manual: File System</a></li>
+    </ul>
+</div>
+
+<div class="content-box snippets-section" style="background: var(--hover-bg); margin-top:20px;">
+    <h3 style="margin-top:0;">Useful Snippets</h3>
+    <pre style="margin:0;"><code>&lt;?php
+file_put_contents(&#039;log.txt&#039;, &quot;Error logged!\n&quot;, FILE_APPEND);
+?&gt;</code></pre>
+</div>
+
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

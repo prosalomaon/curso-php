@@ -57,4 +57,19 @@ require_once __DIR__ . '/../includes/header.php';
     <button type="submit" style="width:100%;">Create Task Node</button>
 </form>
 
+
+<div class="info-box references-section" style="margin-top: 40px; border-left-color: #007BFF;">
+    <h3 style="margin-top:0;">References & Official Documentation</h3>
+    <ul>
+        <li><a href="https://www.php.net/manual/pt_BR/tutorial.forms.php" target="_blank">PHP Manual: Forms Handling</a></li>
+    </ul>
+</div>
+
+<div class="content-box snippets-section" style="background: var(--hover-bg); margin-top:20px;">
+    <h3 style="margin-top:0;">Useful Snippets</h3>
+    <pre style="margin:0;"><code>&lt;?php
+$name = filter_input(INPUT_POST, &#039;name&#039;, FILTER_SANITIZE_STRING);
+?&gt;</code></pre>
+</div>
+
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

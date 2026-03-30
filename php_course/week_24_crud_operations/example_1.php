@@ -38,4 +38,20 @@ require_once __DIR__ . '/../includes/header.php';
     When deploying logic that touches multiple database tables simultaneously (e.g. creating a User AND assigning them a Profile), wrap it natively in a PDO Transaction!
 </div>
 
+
+<div class="info-box references-section" style="margin-top: 40px; border-left-color: #007BFF;">
+    <h3 style="margin-top:0;">References & Official Documentation</h3>
+    <ul>
+        <li><a href="https://www.php.net/manual/pt_BR/pdostatement.execute.php" target="_blank">PHP Manual: CRUD Operations</a></li>
+    </ul>
+</div>
+
+<div class="content-box snippets-section" style="background: var(--hover-bg); margin-top:20px;">
+    <h3 style="margin-top:0;">Useful Snippets</h3>
+    <pre style="margin:0;"><code>&lt;?php
+$stmt = $pdo-&gt;prepare(&quot;INSERT INTO users (name) VALUES (:name)&quot;);
+$stmt-&gt;execute([&#039;name&#039; =&gt; $data]);
+?&gt;</code></pre>
+</div>
+
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

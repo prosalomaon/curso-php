@@ -54,4 +54,23 @@ if ($env === 'production') {
     <strong>CRITICAL:</strong> <code>.env</code> files must inherently be listed in <code>.gitignore</code>! Never commit database structures to GitHub!
 </div>
 
+
+<div class="info-box references-section" style="margin-top: 40px; border-left-color: #007BFF;">
+    <h3 style="margin-top:0;">References & Official Documentation</h3>
+    <ul>
+        <li><a href="https://www.php.net/manual/pt_BR/book.errorfunc.php" target="_blank">PHP Manual: Error Handling</a></li>
+    </ul>
+</div>
+
+<div class="content-box snippets-section" style="background: var(--hover-bg); margin-top:20px;">
+    <h3 style="margin-top:0;">Useful Snippets</h3>
+    <pre style="margin:0;"><code>&lt;?php
+try {
+    // risky logic
+} catch (Exception $e) {
+    error_log($e-&gt;getMessage());
+}
+?&gt;</code></pre>
+</div>
+
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

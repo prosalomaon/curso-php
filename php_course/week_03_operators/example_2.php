@@ -47,4 +47,22 @@ require_once __DIR__ . '/../includes/header.php';
     <button type="submit">Attempt Login</button>
 </form>
 
+
+<div class="info-box references-section" style="margin-top: 40px; border-left-color: #007BFF;">
+    <h3 style="margin-top:0;">References & Official Documentation</h3>
+    <ul>
+        <li><a href="https://www.php.net/manual/pt_BR/language.operators.php" target="_blank">PHP Manual: Operators</a></li>
+    </ul>
+</div>
+
+<div class="content-box snippets-section" style="background: var(--hover-bg); margin-top:20px;">
+    <h3 style="margin-top:0;">Useful Snippets</h3>
+    <pre style="margin:0;"><code>&lt;?php
+$result = match(true) {
+    $a === $b =&gt; &#039;Strictly Equal&#039;,
+    default =&gt; &#039;Different&#039;
+};
+?&gt;</code></pre>
+</div>
+
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

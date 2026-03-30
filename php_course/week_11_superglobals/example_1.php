@@ -44,4 +44,20 @@ require_once __DIR__ . '/../includes/header.php';
     <?php endif; ?>
 </div>
 
+
+<div class="info-box references-section" style="margin-top: 40px; border-left-color: #007BFF;">
+    <h3 style="margin-top:0;">References & Official Documentation</h3>
+    <ul>
+        <li><a href="https://www.php.net/manual/pt_BR/language.variables.superglobals.php" target="_blank">PHP Manual: Superglobals</a></li>
+    </ul>
+</div>
+
+<div class="content-box snippets-section" style="background: var(--hover-bg); margin-top:20px;">
+    <h3 style="margin-top:0;">Useful Snippets</h3>
+    <pre style="margin:0;"><code>&lt;?php
+var_dump($_SERVER[&#039;HTTP_HOST&#039;]);
+var_dump($_GET[&#039;id&#039;] ?? 1);
+?&gt;</code></pre>
+</div>
+
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

@@ -40,4 +40,19 @@ require_once __DIR__ . '/../includes/header.php';
     <strong>Mandatory Security Check:</strong> <code>PDO::ATTR_EMULATE_PREPARES</code> must be turned <code>false</code> in order to force the actual MySQL engine to prepare the queries natively (Better security against injection).
 </div>
 
+
+<div class="info-box references-section" style="margin-top: 40px; border-left-color: #007BFF;">
+    <h3 style="margin-top:0;">References & Official Documentation</h3>
+    <ul>
+        <li><a href="https://www.php.net/manual/pt_BR/pdo.connections.php" target="_blank">PHP Manual: PDO Connection</a></li>
+    </ul>
+</div>
+
+<div class="content-box snippets-section" style="background: var(--hover-bg); margin-top:20px;">
+    <h3 style="margin-top:0;">Useful Snippets</h3>
+    <pre style="margin:0;"><code>&lt;?php
+$pdo = new PDO(&#039;mysql:host=localhost;dbname=test&#039;, &#039;root&#039;, &#039;&#039;);
+?&gt;</code></pre>
+</div>
+
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
