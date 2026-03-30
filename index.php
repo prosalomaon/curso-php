@@ -4,16 +4,14 @@
  * Simple Black and White layout as requested.
  */
 $course_path = "php_course";
-$directories = array_filter(glob(__DIR__ . '/' . $course_path . '/week_*'), 'is_dir');
-natsort($directories);
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PHP Course Navigation</title>
+  <title>Navegação do Curso de PHP</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -21,20 +19,24 @@ natsort($directories);
 
   <div class="container">
     <header>
-      <h1>PHP Zero To Hero</h1>
-      <p class="subtitle">Complete Technical Course Curriculum</p>
+      <h1>PHP: Do Zero ao Herói</h1>
+      <p class="subtitle">Currículo Técnico Completo do Curso</p>
     </header>
 
     <main>
-      <?php if (empty($directories)): ?>
+      <?php 
+      $directories = array_filter(glob(__DIR__ . '/' . $course_path . '/semana_*'), 'is_dir');
+      natsort($directories);
+      if (empty($directories)): 
+      ?>
         <div class="week-container">
-          <p>No weekly course folders were found in this directory.</p>
+          <p>Nenhuma pasta semanal foi encontrada neste diretório.</p>
         </div>
       <?php else: ?>
         <?php foreach ($directories as $dir): ?>
           <?php
           $folderName = basename($dir);
-          // Clean up title: replace underscores with spaces and remove 'week' prefix
+          // Clean up title: replace underscores with spaces and remove 'semana' prefix
           $cleanTitle = str_replace('_', ' ', $folderName);
 
           // Common course files to check for
@@ -66,7 +68,7 @@ natsort($directories);
     </main>
 
     <footer>
-      End of Curriculum
+      Fim do Currículo
     </footer>
   </div>
 

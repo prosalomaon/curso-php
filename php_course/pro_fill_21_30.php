@@ -11,24 +11,24 @@ $examples = [
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 21: Relational Database Schemas";
+$pageTitle = "Semana 21: Esquemas de Banco de Dados Relacionais";
 
 $schemaCode = <<<SQL
-CREATE TABLE IF NOT EXISTS users (
+CREATE TABLE IF NOT EXISTS usuarios (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(150) NOT NULL UNIQUE,
-    role ENUM('USER', 'ADMIN') DEFAULT 'USER',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    funcao ENUM('USUARIO', 'ADMIN') DEFAULT 'USUARIO',
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     INDEX(email)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS posts (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    user_id INT UNSIGNED NOT NULL,
-    title VARCHAR(255) NOT NULL,
-    content TEXT,
-    CONSTRAINT fk_post_user
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    usuario_id INT UNSIGNED NOT NULL,
+    titulo VARCHAR(255) NOT NULL,
+    conteudo TEXT,
+    CONSTRAINT fk_post_usuario
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
     ON DELETE CASCADE
 ) ENGINE=InnoDB;
 SQL;
@@ -38,15 +38,15 @@ require_once __DIR__ . '/../includes/header.php';
 ?>
 <!-- START PRESENTATION -->
 <div class="content-box">
-    <h2>MySQL / MariaDB Standardization</h2>
-    <p>PHP relies on rock-solid database schema designs. Use InnoDB and utf8mb4 encoding to fully support modern Unicode formats (like emojis) and Foreign Constraints.</p>
+    <h2>Padronização MySQL / MariaDB</h2>
+    <p>O PHP depende de designs de esquema de banco de dados sólidos. Use InnoDB e codificação utf8mb4 para suportar totalmente formatos Unicode modernos (como emojis) e Restrições Estrangeiras.</p>
 </div>
 
-<h3>Foundational 1-to-Many Architecture</h3>
+<h3>Arquitetura Fundamental 1-para-Muitos</h3>
 <pre><?= htmlspecialchars($schemaCode) ?></pre>
 
 <div class="info-box">
-    <strong>Relational Integrity:</strong> The <code>ON DELETE CASCADE</code> instructs the database engine to instantly wipe all <code>posts</code> belonging to a user if the user's ID is deleted, preventing "Orphaned Records" safely without PHP intervening.
+    <strong>Integridade Relacional:</strong> O <code>ON DELETE CASCADE</code> instrui o mecanismo do banco de dados a apagar instantaneamente todos os <code>posts</code> pertencentes a um usuário se o ID do usuário for excluído, evitando "Registros Órfãos" de forma segura, sem intervenção do PHP.
 </div>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
@@ -56,28 +56,28 @@ EOT,
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 21 Project: Blog Database Bootstrap";
+$pageTitle = "Projeto Semana 21: Bootstrap de Banco de Dados de Blog";
 
 $tables = [
-    'categories' => "
-CREATE TABLE categories (
+    'categorias' => "
+CREATE TABLE categorias (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL
+    nome VARCHAR(100) NOT NULL
 )",
-    'articles' => "
-CREATE TABLE articles (
+    'artigos' => "
+CREATE TABLE artigos (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    category_id INT NULL,
-    title VARCHAR(200) NOT NULL,
-    body TEXT,
-    FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL
+    categoria_id INT NULL,
+    titulo VARCHAR(200) NOT NULL,
+    corpo TEXT,
+    FOREIGN KEY (categoria_id) REFERENCES categorias(id) ON DELETE SET NULL
 )"
 ];
 
 $simulatedLogs = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     foreach ($tables as $name => $query) {
-        $simulatedLogs[] = "Migrated target node: [{$name}]";
+        $simulatedLogs[] = "Nó de destino migrado: [{$name}]";
     }
 }
 // --- END LOGIC ---
@@ -86,7 +86,7 @@ require_once __DIR__ . '/../includes/header.php';
 ?>
 <!-- START PRESENTATION -->
 <div class="content-box">
-    <h2>CMS Schema Bootstrap Engine</h2>
+    <h2>Mecanismo de Bootstrap de Esquema CMS</h2>
 </div>
 
 <?php if ($simulatedLogs): ?>
@@ -94,12 +94,12 @@ require_once __DIR__ . '/../includes/header.php';
         <?php foreach ($simulatedLogs as $log): ?>
             <div>>> <?= htmlspecialchars($log) ?></div>
         <?php endforeach; ?>
-        <div style="margin-top:10px; color:yellow;">System configured for PDO insertion successfully.</div>
+        <div style="margin-top:10px; color:yellow;">Sistema configurado para inserção PDO com sucesso.</div>
     </div>
 <?php endif; ?>
 
 <form method="POST" class="content-box">
-    <button type="submit" style="width:100%;" <?= $simulatedLogs ? 'disabled' : '' ?>>Execute System Migrations</button>
+    <button type="submit" style="width:100%;" <?= $simulatedLogs ? 'disabled' : '' ?>>Executar Migrações do Sistema</button>
 </form>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
@@ -111,9 +111,9 @@ EOT
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 22: Advanced PDO Architectures";
+$pageTitle = "Semana 22: Arquiteturas PDO Avançadas";
 
-// Creating a simulated mock to prevent crashing on missing localhost databases in this demo environment
+// Criando um mock seguro para evitar travamentos em bancos de dados locais ausentes neste ambiente de demonstração
 class SafeMockPDO {
     public function getAttribute($attr) {
         return "STRICT_EXCEPTION_MODE";
@@ -135,18 +135,18 @@ require_once __DIR__ . '/../includes/header.php';
 ?>
 <!-- START PRESENTATION -->
 <div class="content-box">
-    <h2>PHP Data Objects (PDO) Setup</h2>
-    <p>Using the legendary Singleton Pattern ensures your app opens exactly 1 connection to your Database per page load, rather than 50!</p>
+    <h2>Configuração de PHP Data Objects (PDO)</h2>
+    <p>O uso do lendário Padrão Singleton garante que sua aplicação abra exatamente 1 conexão com seu Banco de Dados por carregamento de página, em vez de 50!</p>
 </div>
 
 <div class="success-box">
-    Database Connectivity Configured.<br>
-    <strong>Error Mode:</strong> <?= htmlspecialchars($pdo->getAttribute('mock')) ?><br>
-    <strong>Fetch Mode:</strong> FETCH_ASSOC (Associative Arrays)
+    Conectividade de Banco de Dados Configurada.<br>
+    <strong>Modo de Erro:</strong> <?= htmlspecialchars($pdo->getAttribute('mock')) ?><br>
+    <strong>Modo de Busca:</strong> FETCH_ASSOC (Arrays Associativos)
 </div>
 
 <div class="info-box">
-    <strong>Mandatory Security Check:</strong> <code>PDO::ATTR_EMULATE_PREPARES</code> must be turned <code>false</code> in order to force the actual MySQL engine to prepare the queries natively (Better security against injection).
+    <strong>Verificação de Segurança Obrigatória:</strong> <code>PDO::ATTR_EMULATE_PREPARES</code> deve ser definido como <code>false</code> para forçar o mecanismo MySQL real a preparar as consultas nativamente (Melhor segurança contra injeção).
 </div>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
@@ -156,14 +156,14 @@ EOT,
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 22 Project: PDO Fetch Abstractions";
+$pageTitle = "Projeto Semana 22: Abstrações de Busca PDO";
 
 class SimulatedStatement {
     public function fetchAll(int $mode = PDO::FETCH_ASSOC): array {
         if ($mode === PDO::FETCH_OBJ) {
-            return [(object)['id'=>1, 'title'=>'PDO Engine Architecture']];
+            return [(object)['id'=>1, 'titulo'=>'Arquitetura do Mecanismo PDO']];
         }
-        return [['id'=>1, 'title'=>'PDO Engine Architecture']];
+        return [['id'=>1, 'titulo'=>'Arquitetura do Mecanismo PDO']];
     }
 }
 
@@ -177,19 +177,19 @@ require_once __DIR__ . '/../includes/header.php';
 ?>
 <!-- START PRESENTATION -->
 <div class="content-box">
-    <h2>Retrieval Format Engine</h2>
+    <h2>Mecanismo de Formato de Recuperação</h2>
 </div>
 
 <div style="display:flex; gap:20px; flex-wrap:wrap;">
     <div style="flex:1;">
-        <h3>Standard Arrays (FETCH_ASSOC)</h3>
-        <p>Ultra-fast array hash mapping.</p>
+        <h3>Arrays Padrão (FETCH_ASSOC)</h3>
+        <p>Mapeamento de hash de array ultra-rápido.</p>
         <pre><?= htmlspecialchars(print_r($assocOutput, true)) ?></pre>
     </div>
     
     <div style="flex:1;">
-        <h3>Anonymous Objects (FETCH_OBJ)</h3>
-        <p>Cleaner <code>$row->title</code> syntax mapping natively applied.</p>
+        <h3>Objetos Anônimos (FETCH_OBJ)</h3>
+        <p>Sintaxe <code>$row->titulo</code> mais limpa aplicada nativamente.</p>
         <pre><?= htmlspecialchars(print_r($objOutput, true)) ?></pre>
     </div>
 </div>
@@ -203,17 +203,17 @@ EOT
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 23: Bindings & SQL Injection Defense";
+$pageTitle = "Semana 23: Bindings e Defesa contra Injeção SQL";
 
-$userId = $_GET['id'] ?? '1 OR 1=1; DROP TABLE users;';
+$userId = $_GET['id'] ?? '1 OR 1=1; DROP TABLE usuarios;';
 
 $safeExample = <<<PHP
-\$stmt = \$pdo->prepare("UPDATE users SET status = :status WHERE id = :user_id");
+\$stmt = \$pdo->prepare("UPDATE usuarios SET status = :status WHERE id = :usuario_id");
 
-// Execute binds values perfectly, closing the injection loophole explicitly.
+// O execute vincula os valores perfeitamente, fechando a brecha de injeção explicitamente.
 \$stmt->execute([
-    'user_id' => \$userId,
-    'status'  => 'active'
+    'usuario_id' => \$userId,
+    'status'  => 'ativo'
 ]);
 PHP;
 // --- END LOGIC ---
@@ -222,20 +222,20 @@ require_once __DIR__ . '/../includes/header.php';
 ?>
 <!-- START PRESENTATION -->
 <div class="content-box">
-    <h2>Prepared Statements (The Ultimate Shield)</h2>
-    <p>SQL Injection is the #1 vulnerability on the web. We kill it permanently by separating the SQL logic framework from the user's data variables using <code>prepare()</code>.</p>
+    <h2>Prepared Statements (O Escudo Supremo)</h2>
+    <p>Injeção SQL é a vulnerabilidade nº 1 na web. Nós a eliminamos permanentemente separando a estrutura lógica do SQL das variáveis de dados do usuário usando <code>prepare()</code>.</p>
 </div>
 
 <div class="error-box">
-    <strong>Malicious Payload Detected in $_GET:</strong><br>
+    <strong>Carga Útil Maliciosa Detectada em $_GET:</strong><br>
     <code><?= htmlspecialchars($userId) ?></code>
 </div>
 
 <div class="success-box">
-    Using <strong>Named Bindings</strong> (<code>:variable</code>), the malicious string above is treated purely as a literal string by the database engine, causing no damage.
+    Usando <strong>Bindings Nomeados</strong> (<code>:variable</code>), a string maliciosa acima é tratada puramente como uma string literal pelo mecanismo do banco de dados, não causando danos.
 </div>
 
-<h3>Deployment Code:</h3>
+<h3>Código de Implantação:</h3>
 <pre><?= htmlspecialchars($safeExample) ?></pre>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
@@ -245,19 +245,19 @@ EOT,
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 23 Project: Secure Article Search Engine";
+$pageTitle = "Projeto Semana 23: Mecanismo de Busca de Artigos Seguro";
 
 $searchTerm = filter_input(INPUT_POST, 'query', FILTER_SANITIZE_SPECIAL_CHARS);
 $simulatedResults = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($searchTerm)) {
-    // 1. The wildcard % must be appended in PHP, not in the raw SQL statement!
+    // 1. O curinga % deve ser anexado no PHP, não na instrução SQL bruta!
     $boundVariable = '%' . $searchTerm . '%';
     
-    // 2. Simulated DB execution
+    // 2. Simulação de execução de DB
     $simulatedResults = [
-        ['id' => 44, 'title' => "Mastering {$searchTerm} Architecture"],
-        ['id' => 99, 'title' => "Deploying {$searchTerm} to AWS"]
+        ['id' => 44, 'titulo' => "Dominando a Arquitetura de {$searchTerm}"],
+        ['id' => 99, 'titulo' => "Implantando {$searchTerm} na AWS"]
     ];
 }
 // --- END LOGIC ---
@@ -266,30 +266,30 @@ require_once __DIR__ . '/../includes/header.php';
 ?>
 <!-- START PRESENTATION -->
 <div class="content-box">
-    <h2>WILDCARD Integration Mapping</h2>
-    <p>Using <code>LIKE</code> with PDO.</p>
+    <h2>Mapeamento de Integração WILDCARD</h2>
+    <p>Usando <code>LIKE</code> com PDO.</p>
 </div>
 
 <form method="POST" class="content-box" style="background:var(--hover-bg);">
-    <label>Search the Blog Database:</label>
+    <label>Buscar no Banco de Dados do Blog:</label>
     <div style="display:flex; gap:10px;">
-        <input type="text" name="query" required autocomplete="off" placeholder="Try searching 'PHP'">
-        <button type="submit" style="white-space:nowrap;">Run Query</button>
+        <input type="text" name="query" required autocomplete="off" placeholder="Tente buscar 'PHP'">
+        <button type="submit" style="white-space:nowrap;">Executar Consulta</button>
     </div>
 </form>
 
 <?php if ($simulatedResults !== null): ?>
-    <h3>Database Output (0.012s):</h3>
+    <h3>Saída do Banco de Dados (0.012s):</h3>
     <ul>
         <?php foreach ($simulatedResults as $row): ?>
-            <li><strong>[Article #<?= $row['id'] ?>]</strong> <?= htmlspecialchars($row['title']) ?></li>
+            <li><strong>[Artigo #<?= $row['id'] ?>]</strong> <?= htmlspecialchars($row['titulo']) ?></li>
         <?php endforeach; ?>
     </ul>
     
     <div class="info-box" style="margin-top:20px;">
-        <strong>Behind the scenes SQL Executed safely:</strong><br>
-        <code>SELECT * FROM articles WHERE title LIKE :query</code><br>
-        <em>Bound <code>:query</code> to <code>"<?= htmlspecialchars('%' . $searchTerm . '%') ?>"</code></em>
+        <strong>Nos bastidores, SQL executado com segurança:</strong><br>
+        <code>SELECT * FROM artigos WHERE titulo LIKE :query</code><br>
+        <em>Vinculado <code>:query</code> para <code>"<?= htmlspecialchars('%' . $searchTerm . '%') ?>"</code></em>
     </div>
 <?php endif; ?>
 
@@ -302,22 +302,22 @@ EOT
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 24: ACID Compliance and Database Transactions";
+$pageTitle = "Semana 24: Conformidade ACID e Transações de Banco de Dados";
 
 $transactionCode = <<<PHP
 try {
     \$pdo->beginTransaction();
 
-    // Deduct money from Account A
-    \$pdo->exec("UPDATE accounts SET balance = balance - 100 WHERE id = 1");
+    // Deduzir dinheiro da Conta A
+    \$pdo->exec("UPDATE contas SET saldo = saldo - 100 WHERE id = 1");
     
-    // Add money to Account B
-    \$pdo->exec("UPDATE accounts SET balance = balance + 100 WHERE id = 2");
+    // Adicionar dinheiro à Conta B
+    \$pdo->exec("UPDATE contas SET saldo = saldo + 100 WHERE id = 2");
 
-    \$pdo->commit(); // Save all changes atomically
+    \$pdo->commit(); // Salvar todas as alterações atomicamente
 
 } catch (Exception \$e) {
-    \$pdo->rollBack(); // On ANY error, revert the entire batch!
+    \$pdo->rollBack(); // Em QUALQUER erro, reverter todo o lote!
     throw \$e;
 }
 PHP;
@@ -327,15 +327,15 @@ require_once __DIR__ . '/../includes/header.php';
 ?>
 <!-- START PRESENTATION -->
 <div class="content-box">
-    <h2>The <code>rollBack()</code> Safety Net</h2>
-    <p>What happens if a script crashes natively half-way through transferring $10,000 from one user to another? Data corruption. Transactions fix this instantly.</p>
+    <h2>A Rede de Segurança <code>rollBack()</code></h2>
+    <p>O que acontece se um script falha no meio da transferência de R$ 10.000 de um usuário para outro? Corrupção de dados. Transações corrigem isso instantaneamente.</p>
 </div>
 
-<h3>Atomic Consistency Code Block:</h3>
+<h3>Bloco de Código de Consistência Atômica:</h3>
 <pre><?= htmlspecialchars($transactionCode) ?></pre>
 
 <div class="info-box">
-    When deploying logic that touches multiple database tables simultaneously (e.g. creating a User AND assigning them a Profile), wrap it natively in a PDO Transaction!
+    Ao implantar lógica que toca em várias tabelas de banco de dados simultaneamente (ex: criar um Usuário E atribuir-lhe um Perfil), envolva-a nativamente em uma Transação PDO!
 </div>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
@@ -345,21 +345,21 @@ EOT,
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 24 Project: Safe Deletion Workflows";
+$pageTitle = "Projeto Semana 24: Fluxos de Trabalho de Exclusão Segura";
 
 $articleId = filter_input(INPUT_POST, 'delete_id', FILTER_VALIDATE_INT);
-$currentUserId = 1; // Simulated session
+$currentUserId = 1; // Sessão simulada
 $log = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $articleId) {
-    // Stage 1: Verification Phase Simulation
-    $ownerCheckPassed = ($articleId !== 999); // 999 simulates an un-owned article
+    // Fase de Simulação do Estágio 1: Verificação
+    $ownerCheckPassed = ($articleId !== 999); // 999 simula um artigo que não pertence ao usuário
     
     if (!$ownerCheckPassed) {
-        $log = "ERROR: You lack authorization to delete Article #$articleId.";
+        $log = "ERRO: Você não tem autorização para excluir o Artigo #$articleId.";
     } else {
-        // Stage 2: Execution Phase Simulation
-        $log = "SUCCESS: Article #$articleId and all associated Tags completely wiped from Database.";
+        // Fase de Simulação do Estágio 2: Execução
+        $log = "SUCESSO: Artigo #$articleId e todas as Tags associadas foram completamente apagados do Banco de Dados.";
     }
 }
 // --- END LOGIC ---
@@ -368,24 +368,24 @@ require_once __DIR__ . '/../includes/header.php';
 ?>
 <!-- START PRESENTATION -->
 <div class="content-box">
-    <h2>Enforcing Ownership on DELETE</h2>
-    <p>If you don't check <code>WHERE author_id = :uid</code> inside your delete queries, hackers simply change the ID to wipe someone else's data!</p>
+    <h2>Impondo Propriedade no DELETE</h2>
+    <p>Se você não verificar <code>WHERE autor_id = :uid</code> dentro de suas consultas de exclusão, hackers simplesmente alteram o ID para apagar os dados de outra pessoa!</p>
 </div>
 
 <?php if ($log): ?>
-    <div class="<?= str_starts_with($log, 'SUCCESS') ? 'success-box' : 'error-box' ?>">
+    <div class="<?= str_starts_with($log, 'SUCESSO') ? 'success-box' : 'error-box' ?>">
         <?= htmlspecialchars($log) ?>
     </div>
 <?php endif; ?>
 
 <form method="POST" class="content-box" style="border-color:red;">
-    <label>Select Target Article for Deletion:</label>
+    <label>Selecione o Artigo Alvo para Exclusão:</label>
     <div style="display:flex; gap:10px;">
         <select name="delete_id">
-            <option value="55">Normal Article #55 (Belongs to You)</option>
-            <option value="999">Restricted Data #999 (Simulated Hacking Attempt)</option>
+            <option value="55">Artigo Normal #55 (Pertence a Você)</option>
+            <option value="999">Dados Restritos #999 (Tentativa de Invasão Simulada)</option>
         </select>
-        <button type="submit" style="background:red;">Execute Permanent Deletion</button>
+        <button type="submit" style="background:red;">Executar Exclusão Permanente</button>
     </div>
 </form>
 
@@ -398,15 +398,15 @@ EOT
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 25: Relational JOINs & System Optimization";
+$pageTitle = "Semana 25: SQL JOINs e Otimização do Sistema";
 
 $querySyntax = <<<SQL
 SELECT 
-    users.username, 
+    usuarios.username, 
     COUNT(posts.id) as total_posts 
-FROM users 
-LEFT JOIN posts ON users.id = posts.user_id 
-GROUP BY users.id;
+FROM usuarios 
+LEFT JOIN posts ON usuarios.id = posts.usuario_id 
+GROUP BY usuarios.id;
 SQL;
 
 // --- END LOGIC ---
@@ -415,15 +415,15 @@ require_once __DIR__ . '/../includes/header.php';
 ?>
 <!-- START PRESENTATION -->
 <div class="content-box">
-    <h2>Database Relationships over loops (N+1 Crisis)</h2>
-    <p>Running SQL Queries inside a PHP <code>foreach</code> loop is heavily forbidden in production. Instead, we use SQL <code>JOIN</code> syntax to grab interconnected data instantaneously!</p>
+    <h2>Relacionamentos de Banco de Dados acima de loops (Crise N+1)</h2>
+    <p>Executar Consultas SQL dentro de um loop <code>foreach</code> do PHP é fortemente proibido em produção. Em vez disso, usamos a sintaxe SQL <code>JOIN</code> para obter dados interconectados instantaneamente!</p>
 </div>
 
-<h3>Aggregate Data Retrieval (Count total user posts)</h3>
+<h3>Recuperação de Dados Agregados (Contar total de posts por usuário)</h3>
 <pre><?= htmlspecialchars($querySyntax) ?></pre>
 
 <div class="info-box">
-    This logic executes purely inside the MySQL/MariaDB RAM in 3 milliseconds, rather than PHP hammering the network with thousands of separate connection requests natively!
+    Esta lógica é executada puramente dentro da RAM do MySQL/MariaDB em 3 milissegundos, em vez de o PHP sobrecarregar a rede com milhares de solicitações de conexão separadas nativamente!
 </div>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
@@ -433,17 +433,17 @@ EOT,
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 25 Project: CMS Many-to-Many Architecture";
+$pageTitle = "Projeto Semana 25: Arquitetura Muitos-para-Muitos em CMS";
 
 $manyToManySyntax = <<<SQL
-SELECT tags.tag_name 
+SELECT tags.nome_tag 
 FROM tags
-INNER JOIN article_tags ON tags.id = article_tags.tag_id
-WHERE article_tags.article_id = :post_id;
+INNER JOIN artigo_tags ON tags.id = artigo_tags.tag_id
+WHERE artigo_tags.artigo_id = :post_id;
 SQL;
 
-// Simulated Execution returned by PDO
-$articleTags = ['Science', 'PHP Architecture', 'Backend Design'];
+// Execução simulada retornada pelo PDO
+$articleTags = ['Ciência', 'Arquitetura PHP', 'Backend Design'];
 
 // --- END LOGIC ---
 
@@ -451,15 +451,15 @@ require_once __DIR__ . '/../includes/header.php';
 ?>
 <!-- START PRESENTATION -->
 <div class="content-box">
-    <h2>Pivot Tables Context</h2>
-    <p>Articles have multiple Tags. Tags have multiple Articles. We resolve this database nightmare using a Pivot Table (<code>article_tags</code>) natively mapped via an <code>INNER JOIN</code>.</p>
+    <h2>Contexto de Tabelas Pivô (Pivot)</h2>
+    <p>Artigos têm várias Tags. Tags têm vários Artigos. Resolvemos esse pesadelo de banco de dados usando uma Tabela Pivô (<code>artigo_tags</code>) mapeada nativamente via um <code>INNER JOIN</code>.</p>
 </div>
 
-<h3>CMS Query Representation</h3>
+<h3>Representação de Consulta CMS</h3>
 <pre><?= htmlspecialchars($manyToManySyntax) ?></pre>
 
 <div class="success-box">
-    <strong>Tags linked to Article Rendered:</strong>
+    <strong>Tags vinculadas ao Artigo Renderizado:</strong>
     <ul style="margin-bottom:0;">
         <?php foreach ($articleTags as $tag): ?>
             <li style="font-family:monospace;">~ <?= htmlspecialchars($tag) ?></li>
@@ -476,14 +476,14 @@ EOT
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 26: Model-View-Controller (MVC) Pattern";
+$pageTitle = "Semana 26: Padrão Model-View-Controller (MVC)";
 
 $architectureFlow = <<<TEXT
-1. USER requests -> Router.
-2. Router decides which CONTROLLER to deploy based on the URL.
-3. Controller retrieves Data variables from the MODEL (Database).
-4. Controller sanitizes and processes logic.
-5. Controller injects Logic output into the VIEW (HTML).
+1. USUÁRIO solicita -> Roteador.
+2. Roteador decide qual CONTROLADOR implantar com base na URL.
+3. Controlador recupera variáveis de Dados do MODEL (Banco de Dados).
+4. Controlador sanitiza e processa a lógica.
+5. Controlador injeta a saída da Lógica na VIEW (HTML).
 TEXT;
 
 // --- END LOGIC ---
@@ -492,15 +492,15 @@ require_once __DIR__ . '/../includes/header.php';
 ?>
 <!-- START PRESENTATION -->
 <div class="content-box">
-    <h2>Total Separation of Concerns</h2>
-    <p>Your PHP code has grown. MVC is the global standard for keeping huge codebases maintainable by splitting domains explicitly.</p>
+    <h2>Separação Total de Preocupações</h2>
+    <p>Seu código PHP cresceu. O MVC é o padrão global para manter grandes bases de código sustentáveis, dividindo explicitamente os domínios.</p>
 </div>
 
-<h3>The Lifecycle Matrix:</h3>
+<h3>A Matriz do Ciclo de Vida:</h3>
 <pre><?= htmlspecialchars($architectureFlow) ?></pre>
 
 <div class="info-box">
-    <strong>Golden Rule:</strong> Views should absolutely NEVER execute SQL queries or manipulate raw business validation logic. They just print data formatting safely via <code>htmlspecialchars()</code>.
+    <strong>Regra de Ouro:</strong> As Views absolutamente NUNCA devem executar consultas SQL ou manipular lógica de validação de negócios bruta. Elas apenas imprimem a formatação de dados com segurança via <code>htmlspecialchars()</code>.
 </div>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
@@ -510,10 +510,10 @@ EOT,
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 26 Project: JSON API Extractor";
+$pageTitle = "Projeto Semana 26: Extrator de API JSON";
 
-class ArticleApiController {
-    // 1. A global method that forces JSON header architecture
+class ArtigoApiController {
+    // 1. Um método global que força a arquitetura de cabeçalho JSON
     protected function generateJson(array $payload, int $status = 200): void {
         // http_response_code($status);
         // header('Content-Type: application/json');
@@ -521,12 +521,12 @@ class ArticleApiController {
     }
 
     public function retrieve(int $id) {
-        $mockModelData = ['id' => $id, 'title' => 'MVC Paradigm Shift', 'type' => 'Tutorial'];
+        $mockModelData = ['id' => $id, 'titulo' => 'Mudança de Paradigma MVC', 'tipo' => 'Tutorial'];
         $this->generateJson($mockModelData, 200);
     }
 }
 
-$controllerObject = new ArticleApiController();
+$controllerObject = new ArtigoApiController();
 
 // --- END LOGIC ---
 
@@ -534,16 +534,16 @@ require_once __DIR__ . '/../includes/header.php';
 ?>
 <!-- START PRESENTATION -->
 <div class="content-box">
-    <h2>Constructing Base Controllers</h2>
+    <h2>Construindo Controladores Base</h2>
 </div>
 
-<h3>API Endpoint Retrieval Execution:</h3>
+<h3>Execução de Recuperação de Endpoint de API:</h3>
 <pre class="content-box" style="background:#000; color:#0f0;">
 <?php $controllerObject->retrieve(505); ?>
 </pre>
 
 <div class="info-box">
-    The application logic inherits cleanly. A <code>BaseController</code> can contain universal methods like <code>redirect()</code>, <code>validate()</code>, or <code>generateJson()</code>!
+    A lógica da aplicação herda de forma limpa. Um <code>BaseController</code> pode conter métodos universais como <code>redirect()</code>, <code>validate()</code> ou <code>generateJson()</code>!
 </div>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
@@ -555,23 +555,23 @@ EOT
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 27: The Front Controller & Dynamic Routing";
+$pageTitle = "Semana 27: O Front Controller e Roteamento Dinâmico";
 
-// Extract URI from the server map
-$mockUri = '/user/edit/88'; // $_SERVER['REQUEST_URI']
+// Extrair URI do mapa do servidor
+$mockUri = '/usuario/editar/88'; // $_SERVER['REQUEST_URI']
 $mockMethod = 'POST'; // $_SERVER['REQUEST_METHOD']
 
-// 1. Defining route mapping
+// 1. Definindo mapeamento de rotas
 $routeEngineMap = [
-    'GET /user/edit/{id}' => 'UserController@showEditForm',
-    'POST /user/edit/{id}' => 'UserController@saveChanges',
+    'GET /usuario/editar/{id}' => 'UsuarioController@showEditForm',
+    'POST /usuario/editar/{id}' => 'UsuarioController@saveChanges',
 ];
 
 $matchedAction = null;
 
-// 2. Simple regex abstraction matcher
-if (preg_match('#^/user/edit/(\d+)$#', $mockUri, $matches) && $mockMethod === 'POST') {
-    $matchedAction = "Triggering Controller: [UserController], executing [saveChanges], passing Parameter Data: [" . $matches[1] . "]";
+// 2. Simples combinador de abstração regex
+if (preg_match('#^/usuario/editar/(\d+)$#', $mockUri, $matches) && $mockMethod === 'POST') {
+    $matchedAction = "Acionando Controlador: [UsuarioController], executando [saveChanges], passando Dados do Parâmetro: [" . $matches[1] . "]";
 }
 // --- END LOGIC ---
 
@@ -579,16 +579,16 @@ require_once __DIR__ . '/../includes/header.php';
 ?>
 <!-- START PRESENTATION -->
 <div class="content-box">
-    <h2>Single Entry Architecture (Front Controller)</h2>
-    <p>Using `.htaccess` or Nginx, we route every single request (<code>/blog</code>, <code>/contact</code>) to a master <code>index.php</code> script that maps the URI perfectly!</p>
+    <h2>Arquitetura de Entrada Única (Front Controller)</h2>
+    <p>Usando `.htaccess` ou Nginx, roteamos cada solicitação (<code>/blog</code>, <code>/contato</code>) para um script mestre <code>index.php</code> que mapeia o URI perfeitamente!</p>
 </div>
 
 <div class="info-box">
-    <strong>Incoming Client Payload Request:</strong> <code><?= $mockMethod ?> <?= $mockUri ?></code><br>
-    <strong>Regex Dispatcher Result:</strong> <?= htmlspecialchars((string)$matchedAction) ?>
+    <strong>Solicitação de Carga Útil do Cliente:</strong> <code><?= $mockMethod ?> <?= $mockUri ?></code><br>
+    <strong>Resultado do Despachante Regex:</strong> <?= htmlspecialchars((string)$matchedAction) ?>
 </div>
 
-<h3>Defined Application Routes</h3>
+<h3>Rotas de Aplicação Definidas</h3>
 <ul>
     <?php foreach ($routeEngineMap as $uri => $controllerString): ?>
         <li><code><strong><?= explode(' ', $uri)[0] ?></strong> <?= explode(' ', $uri)[1] ?></code> &rarr; <code><?= $controllerString ?></code></li>
@@ -602,16 +602,16 @@ EOT,
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 27 Project: RESTful Verbs Configuration";
+$pageTitle = "Projeto Semana 27: Configuração de Verbos RESTful";
 
 $restVerbs = [
-    'index'   => ['method' => 'GET', 'uri' => '/products', 'desc' => 'List all product database records'],
-    'create'  => ['method' => 'GET', 'uri' => '/products/create', 'desc' => 'Render the physical HTML Form'],
-    'store'   => ['method' => 'POST','uri' => '/products', 'desc' => 'Accept POST payload and execute DB Insertion'],
-    'show'    => ['method' => 'GET', 'uri' => '/products/{id}', 'desc' => 'Fetch and display a specific resource'],
-    'edit'    => ['method' => 'GET', 'uri' => '/products/{id}/edit', 'desc' => 'Render pre-filled HTML Form'],
-    'update'  => ['method' => 'PUT', 'uri' => '/products/{id}', 'desc' => 'Accept PUT payload and execute DB Modification'],
-    'destroy' => ['method' => 'DELETE', 'uri' => '/products/{id}', 'desc' => 'Execute absolute elimination algorithms'],
+    'index'   => ['metodo' => 'GET', 'uri' => '/produtos', 'desc' => 'Listar todos os registros do banco de dados de produtos'],
+    'create'  => ['metodo' => 'GET', 'uri' => '/produtos/create', 'desc' => 'Renderizar o formulário HTML físico'],
+    'store'   => ['metodo' => 'POST','uri' => '/produtos', 'desc' => 'Aceitar carga POST e executar inserção no DB'],
+    'show'    => ['metodo' => 'GET', 'uri' => '/produtos/{id}', 'desc' => 'Buscar e exibir um recurso específico'],
+    'edit'    => ['metodo' => 'GET', 'uri' => '/produtos/{id}/edit', 'desc' => 'Renderizar formulário HTML pré-preenchido'],
+    'update'  => ['metodo' => 'PUT', 'uri' => '/produtos/{id}', 'desc' => 'Aceitar carga PUT e executar modificação no DB'],
+    'destroy' => ['metodo' => 'DELETE', 'uri' => '/produtos/{id}', 'desc' => 'Executar algoritmos de eliminação absoluta'],
 ];
 // --- END LOGIC ---
 
@@ -619,17 +619,17 @@ require_once __DIR__ . '/../includes/header.php';
 ?>
 <!-- START PRESENTATION -->
 <div class="content-box">
-    <h2>REST Standard Paradigms</h2>
-    <p>Following absolute HTTP protocol specifications creates perfectly predictable URL architectures for the E-Commerce backbone.</p>
+    <h2>Paradigmas de Padrão REST</h2>
+    <p>Seguir as especificações absolutas do protocolo HTTP cria arquiteturas de URL perfeitamente previsíveis para o backbone do E-Commerce.</p>
 </div>
 
 <table>
-    <thead><tr><th>MVC Controller Call</th><th>Verb</th><th>URI Path</th><th>Operational Target</th></tr></thead>
+    <thead><tr><th>Chamada do Controlador MVC</th><th>Verbo</th><th>Caminho URI</th><th>Alvo Operacional</th></tr></thead>
     <tbody>
         <?php foreach ($restVerbs as $action => $details): ?>
         <tr>
             <td><strong><code><?= htmlspecialchars($action) ?>()</code></strong></td>
-            <td style="font-weight:bold; color:var(--text-color);"><?= $details['method'] ?></td>
+            <td style="font-weight:bold; color:var(--text-color);"><?= $details['metodo'] ?></td>
             <td><code><?= htmlspecialchars($details['uri']) ?></code></td>
             <td><?= htmlspecialchars($details['desc']) ?></td>
         </tr>
@@ -646,33 +646,33 @@ EOT
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 28: View Engines & Global Helpers";
+$pageTitle = "Semana 28: Motores de Visualização (View Engines) e Helpers Globais";
 
-// Function mapping used exclusively in HTML views mapping
+// Mapeamento de função usado exclusivamente no mapeamento de visualizações HTML
 function e(?string $text): string {
     return htmlspecialchars($text ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
 
-$maliciousDataAttempt = "<script>alert('Stealing cookies using XSS!');</script>";
+$maliciousDataAttempt = "<script>alert('Roubando cookies usando XSS!');</script>";
 // --- END LOGIC ---
 
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <!-- START PRESENTATION -->
 <div class="content-box">
-    <h2>The Presentation Layer (Views)</h2>
-    <p>Views should never format raw data directly. A global helper like <code>e()</code> ensures we never accidentally leak HTML script nodes to the browser layout.</p>
+    <h2>A Camada de Apresentação (Views)</h2>
+    <p>As views nunca devem formatar dados brutos diretamente. Um helper global como <code>e()</code> garante que nunca vazemos acidentalmente nós de script HTML para o layout do navegador.</p>
 </div>
 
-<h3>Cross Site Scripting Mitigation Matrix:</h3>
+<h3>Matriz de Mitigação de Cross Site Scripting:</h3>
 <div style="border:1px solid var(--border-color); padding:10px; margin-bottom:10px;">
-    <strong>Raw Attack Output Simulation:</strong><br>
+    <strong>Simulação de Saída de Ataque Bruto:</strong><br>
     <code style="color:red;"><?= htmlspecialchars("echo \$maliciousDataAttempt;") ?></code>
 </div>
 
 <div class="success-box">
-    <strong>Escaped Protection Engine:</strong><br>
-    <code>e($maliciousDataAttempt)</code> outputs:<br><br>
+    <strong>Mecanismo de Proteção com Escape:</strong><br>
+    <code>e($maliciousDataAttempt)</code> produz:<br><br>
     <b style="color:#155724; font-family:monospace;"><?= e($maliciousDataAttempt) ?></b>
 </div>
 
@@ -683,21 +683,21 @@ EOT,
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 28 Project: Master Layout Wrappers";
+$pageTitle = "Projeto Semana 28: Wrappers de Layout Mestre (Master Layout)";
 
 $outputBufferingCode = <<<PHP
-// 1. Pause browser screen output explicitly
+// 1. Pausar a saída da tela do navegador explicitamente
 ob_start();
 
-// 2. Load the page data natively (e.g., login_form.php)
+// 2. Carregar os dados da página nativamente (ex: login_form.php)
 require 'views/' . \$viewName . '.php';
 
-// 3. Dump buffer into a string variable
+// 3. Despejar o buffer em uma variável de string
 \$content = ob_get_clean();
 
-// 4. Inject it into the Master Layout Frame
+// 4. Injetá-lo no Frame do Layout Mestre
 require 'layouts/master.php'; 
-// (Inside master.php, we simply write: <?=\$content?> in the center of the HTML)
+// (Dentro de master.php, simplesmente escrevemos: <?=\$content?> no centro do HTML)
 PHP;
 // --- END LOGIC ---
 
@@ -705,15 +705,15 @@ require_once __DIR__ . '/../includes/header.php';
 ?>
 <!-- START PRESENTATION -->
 <div class="content-box">
-    <h2>Output Buffering Interception</h2>
-    <p>How does a framework render the same header and footer globally without needing to literally copy-paste <code>require 'header.php'</code> into every single file? Using the super powerful <code>ob_start()</code> system.</p>
+    <h2>Interceptação de Buffer de Saída (Output Buffering)</h2>
+    <p>Como um framework renderiza o mesmo cabeçalho e rodapé globalmente sem precisar literalmente copiar e colar <code>require 'header.php'</code> em cada arquivo? Usando o poderoso sistema <code>ob_start()</code>.</p>
 </div>
 
-<h3>Internal Renderer Injection Script:</h3>
+<h3>Script de Injeção de Renderizador Interno:</h3>
 <pre><?= htmlspecialchars($outputBufferingCode) ?></pre>
 
 <div class="info-box">
-    <strong>Note:</strong> We are currently utilizing a basic version of this internally in the <code>php_course</code> folder to enforce our Black & White design!
+    <strong>Nota:</strong> Atualmente estamos utilizando uma versão básica disso internamente na pasta <code>php_course</code> para impor nosso design Preto e Branco!
 </div>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
@@ -725,11 +725,11 @@ EOT
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 29: Cryptography & Password Hashing";
+$pageTitle = "Semana 29: Criptografia e Hashing de Senhas";
 
 $plaintext = "SecureSystem__89";
 
-// Hashing is SLOW aggressively to prevent Brute Force database cracking!
+// O Hashing é LENTO agressivamente para evitar a quebra do banco de dados por força bruta!
 $options = ['cost' => 12];
 $secureHashValue = password_hash($plaintext, PASSWORD_DEFAULT, $options);
 // --- END LOGIC ---
@@ -738,12 +738,12 @@ require_once __DIR__ . '/../includes/header.php';
 ?>
 <!-- START PRESENTATION -->
 <div class="content-box">
-    <h2>Cryptographic Hash Generation algorithms</h2>
-    <p>Using <code>md5()</code> or <code>sha1()</code> for passwords is critically dangerous. We use <code>password_hash()</code> because it generates random salt strings implicitly and loops dynamically to burn CPU intentionally.</p>
+    <h2>Algoritmos de Geração de Hash Criptográfico</h2>
+    <p>Usar <code>md5()</code> ou <code>sha1()</code> para senhas é criticamente perigoso. Usamos <code>password_hash()</code> porque ele gera strings de sal (salt) aleatórias implicitamente e executa loops dinamicamente para queimar CPU intencionalmente.</p>
 </div>
 
 <table>
-    <tr><th>Raw Value Map</th><th>Generated Hex Signature (BCRYPT usually)</th></tr>
+    <tr><th>Mapa de Valor Bruto</th><th>Assinatura Hex Gerada (BCRYPT geralmente)</th></tr>
     <tr>
         <td><code><?= htmlspecialchars($plaintext) ?></code></td>
         <td style="word-break:break-all;"><strong><?= htmlspecialchars($secureHashValue) ?></strong></td>
@@ -751,7 +751,7 @@ require_once __DIR__ . '/../includes/header.php';
 </table>
 
 <div class="info-box">
-    <strong>Constant-Time Assurance:</strong> Notice that BCRYPT strings contain the algorithm marker (<code>$2y$</code>) and the cost modifier (<code>12$</code>) natively bound to the signature.
+    <strong>Garantia de Tempo Constante:</strong> Observe que as strings BCRYPT contêm o marcador de algoritmo (<code>$2y$</code>) e o modificador de custo (<code>12$</code>) nativamente vinculados à assinatura.
 </div>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
 EOT,
@@ -760,7 +760,7 @@ EOT,
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 29 Project: E-Commerce Registry";
+$pageTitle = "Projeto Semana 29: Registro de E-Commerce";
 
 $log = null;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -768,14 +768,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pass = $_POST['password'] ?? '';
     
     if (!$mail) {
-        $log = "Validation Block: Malformed email structure identifier.";
+        $log = "Bloco de Validação: Identificador de estrutura de e-mail malformado.";
     } elseif (strlen($pass) < 10) {
-        $log = "Security Policy Block: Passphrase requires 10 characters absolute minimum length.";
+        $log = "Bloco de Política de Segurança: A frase de passagem requer um comprimento mínimo absoluto de 10 caracteres.";
     } else {
-        // Generating the Hash!
+        // Gerando o Hash!
         $hashed = password_hash($pass, PASSWORD_DEFAULT);
         
-        $log = "SUCCESS: Registration algorithms passed.\nDatabase Insert Triggered:\nEmail: $mail\nHashed Node: $hashed";
+        $log = "SUCESSO: Algoritmos de registro aprovados.\nInserção no Banco de Dados Acionada:\nEmail: $mail\nNó Hasheado: $hashed";
     }
 }
 // --- END LOGIC ---
@@ -784,23 +784,23 @@ require_once __DIR__ . '/../includes/header.php';
 ?>
 <!-- START PRESENTATION -->
 <div class="content-box">
-    <h2>Account Validation Endpoint</h2>
+    <h2>Endpoint de Validação de Conta</h2>
 </div>
 
 <?php if ($log): ?>
-    <div class="<?= str_starts_with($log, 'SUCCESS') ? 'success-box' : 'error-box' ?>">
+    <div class="<?= str_starts_with($log, 'SUCESSO') ? 'success-box' : 'error-box' ?>">
         <?= nl2br(htmlspecialchars($log)) ?>
     </div>
 <?php endif; ?>
 
 <form method="POST" class="content-box" style="background:var(--hover-bg);">
-    <label>Identify Contact Origin (Email):</label>
+    <label>Identificar Origem do Contato (Email):</label>
     <input type="email" name="email" required autocomplete="off">
     
-    <label>Cryptographic Passphrase Base:</label>
+    <label>Base da Frase de Passagem Criptográfica:</label>
     <input type="password" name="password" required>
     
-    <button type="submit" style="width:100%;">Create Account Node</button>
+    <button type="submit" style="width:100%;">Finalizar Processamento de Cadastro</button>
 </form>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
@@ -812,40 +812,43 @@ EOT
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 30: Authentication State Checks";
+$pageTitle = "Semana 30: Middleware de Autenticação e Guards de Sessão";
 
-// Simulated Database Data
-$dbHashRecord = password_hash("CorrectH0rseBatteryStaple!", PASSWORD_DEFAULT, ['cost' => 10]);
+session_start();
 
-// Simulated Form Data
-$simulatedLoginAttempt = "CorrectH0rseBatteryStaple!";
+function auth_middleware() {
+    if (empty($_SESSION['authenticated'])) {
+        // Simulação de Desvio de Fluxo (Redirect)
+        return false;
+    }
+    return true;
+}
 
-$authGranted = password_verify($simulatedLoginAttempt, $dbHashRecord);
-
-$rehashRequired = password_needs_rehash($dbHashRecord, PASSWORD_DEFAULT, ['cost' => 12]);
+$isProtectedAreaAccessible = auth_middleware();
 // --- END LOGIC ---
 
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <!-- START PRESENTATION -->
 <div class="content-box">
-    <h2>Verifying Hashes and Upgrading Salts</h2>
-    <p>Since we extract salt hashes natively inside the BCRYPT text block, <code>password_verify()</code> can compare a raw string with an encrypted string mathematically.</p>
+    <h2>O Padrão Interceptor (Middleware)</h2>
+    <p>Middleware atua como um bouncer em um clube. Ele verifica seus cookies/sessão ANTES de permitir que o Controlador principal comece a processar lógica sensível.</p>
 </div>
 
-<?php if ($authGranted): ?>
-    <div class="success-box">
-        <h4>Verification Check Passed Gracefully!</h4>
-        <p>The strings mathematically match using the correct internal cryptographic algorithms.</p>
+<?php if (!$isProtectedAreaAccessible): ?>
+    <div class="error-box" style="text-align:center; padding:20px;">
+        <h3 style="margin-top:0;">ACESSO NEGADO: Middleware de Bloco 401</h3>
+        <p>Você não possui o token de sessão necessário para visualizar esta zona protegida.</p>
+        <a href="?login_sim=1"><button>Simular Login de Middleware</button></a>
     </div>
-    
-    <?php if ($rehashRequired): ?>
-        <div class="info-box">
-            <strong>System Tuning:</strong> The database hash was generated using older <code>cost 10</code>. The system is automatically upgrading the hash to <code>cost 12</code> natively in the background and updating the database!
-        </div>
-    <?php endif; ?>
+    <?php if (isset($_GET['login_sim'])) { $_SESSION['authenticated'] = true; header("Location: ?"); exit; } ?>
 <?php else: ?>
-    <div class="error-box">Critical Security Failure. Payload manipulation detected.</div>
+    <div class="success-box">
+        <h3>CONTROLE DE ACESSO CONCEDIDO</h3>
+        <p>O middleware verificou sua sessão e permitiu que o controlador renderizasse este conteúdo privado.</p>
+        <a href="?logout_sim=1"><button style="background:red;">Simular Logout de Middleware</button></a>
+    </div>
+    <?php if (isset($_GET['logout_sim'])) { session_destroy(); header("Location: ?"); exit; } ?>
 <?php endif; ?>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
@@ -855,70 +858,82 @@ EOT,
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 30 Project: Middleware Guard";
+$pageTitle = "Projeto Semana 30: Listas de Controle de Acesso (ACL)";
 
-// We simulate middleware natively handling requests!
-$mockSessionRole = 'CUSTOMER'; // They purchased items.
+class Guard {
+    const ROLES = [
+        'CONVIDADO' => 0,
+        'EDITOR'  => 10,
+        'ADMIN'   => 99
+    ];
 
-// Middleware Controller Pattern Matrix
-$canAccessAdmin = false;
-$middlewareLog = null;
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if ($mockSessionRole === 'SUPER_ADMIN') {
-        $canAccessAdmin = true;
-        $middlewareLog = "ACCESS GRANTED: Security gates bypassed successfully for System Admin.";
-    } else {
-        $middlewareLog = "HTTP 403 FORBIDDEN: Origin Role [" . $mockSessionRole . "] severely lacks the required security node constraints.";
+    public static function canAccess(string $userRole, int $requiredLevel): bool {
+        $userLevel = self::ROLES[$userRole] ?? 0;
+        return $userLevel >= $requiredLevel;
     }
 }
 
+$currentUserRole = $_GET['role'] ?? 'CONVIDADO';
+$requiredAccess = 10; // Nível Editor ou Admin necessário
+
+$accessAllowed = Guard::canAccess($currentUserRole, $requiredAccess);
 // --- END LOGIC ---
 
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <!-- START PRESENTATION -->
 <div class="content-box">
-    <h2>The Middleware Gateway Shield</h2>
-    <p>Controllers should not manually check logic. A specific Middleware layer explicitly executes check states before the Controller is even legally allowed to boot.</p>
+    <h2>Autorização Baseada em Funções (RBAC)</h2>
 </div>
 
-<?php if ($middlewareLog): ?>
-    <div class="<?= $canAccessAdmin ? 'success-box' : 'error-box' ?>">
-        <?= htmlspecialchars($middlewareLog) ?>
+<div class="info-box">
+    <strong>Permissão Necessária:</strong> Nível 10 (EDITOR)<br>
+    <strong>Sua Identidade Atual:</strong> <code><?= htmlspecialchars($currentUserRole) ?></code>
+</div>
+
+<?php if ($accessAllowed): ?>
+    <div class="success-box">
+        <h4>Acesso Autorizado</h4>
+        <p>Como <?= $currentUserRole ?>, você tem permissões para modificar o banco de dados do blog.</p>
+    </div>
+<?php else: ?>
+    <div class="error-box">
+        <h4>Acesso Proibido (403)</h4>
+        <p>Seu nível de segurança é insuficiente para realizar operações de edição.</p>
     </div>
 <?php endif; ?>
 
-<form method="POST" class="content-box" style="border-style:dashed;">
-    <h3 style="margin-top:0;">Access the E-Commerce Admin Node</h3>
-    <p>Target Route: <code>/admin/dashboard</code></p>
-    <button type="submit" style="width:100%; <?= $middlewareLog && !$canAccessAdmin ? 'background:red;border-color:red;' : '' ?>">Execute Path Resolution</button>
-</form>
+<div style="display:flex; gap:10px; margin-top:20px;">
+    <a href="?role=CONVIDADO"><button>Entrar como Convidado</button></a>
+    <a href="?role=EDITOR"><button>Entrar como Editor</button></a>
+    <a href="?role=ADMIN"><button>Entrar como Admin</button></a>
+</div>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
 EOT
     ]
 ];
 
-$dirs = array_filter(glob(__DIR__ . '/week_*'), 'is_dir');
+$dirs = array_filter(glob(__DIR__ . '/semana_*'), 'is_dir');
 foreach ($dirs as $dir) {
-    preg_match('/week_0*(\d+)/', basename($dir), $matches);
-    if (!isset($matches[1])) continue;
-    $weekNum = (int)$matches[1];
+  preg_match('/semana_0*(\d+)/', basename($dir), $matches);
+  if (!isset($matches[1]))
+    continue;
+  $weekNum = (int) $matches[1];
     if (isset($examples[$weekNum])) {
         $refs = require __DIR__ . '/references_data.php';
-        $refData = $refs[$weekNum] ?? ['url' => 'https://www.php.net/manual/pt_BR/', 'title' => 'Official Documentation', 'snippet' => '// Custom snippet'];
+        $refData = $refs[$weekNum] ?? ['url' => 'https://www.php.net/manual/pt_BR/', 'title' => 'Documentação Oficial', 'snippet' => '// Snippet personalizado'];
         
         $injectionHtml = '
 <div class="info-box references-section" style="margin-top: 40px; border-left-color: #007BFF;">
-    <h3 style="margin-top:0;">References & Official Documentation</h3>
+    <h3 style="margin-top:0;">Referências & Documentação Oficial</h3>
     <ul>
-        <li><a href="' . htmlspecialchars($refData['url']) . '" target="_blank">PHP Manual: ' . htmlspecialchars($refData['title']) . '</a></li>
+        <li><a href="' . htmlspecialchars($refData['url']) . '" target="_blank">Manual PHP: ' . htmlspecialchars($refData['title']) . '</a></li>
     </ul>
 </div>
 
 <div class="content-box snippets-section" style="background: var(--hover-bg); margin-top:20px;">
-    <h3 style="margin-top:0;">Useful Snippets</h3>
+    <h3 style="margin-top:0;">Snippets Úteis</h3>
     <pre style="margin:0;"><code>' . htmlspecialchars($refData['snippet']) . '</code></pre>
 </div>
 ';
@@ -932,4 +947,4 @@ foreach ($dirs as $dir) {
         file_put_contents($dir . '/example_2.php', $ex2);
     }
 }
-echo "Professional Layouts generated & applied to Weeks 21-30.\n";
+echo "Layouts Profissionais gerados & aplicados às Semanas 21-30.\n";

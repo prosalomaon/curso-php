@@ -1,6 +1,6 @@
 <?php
 // patch_generators.php
-// This script modifies the pro_fill_*.php scripts to automatically inject the references HTML before saving
+// Este script modifica os scripts pro_fill_*.php para injetar automaticamente o HTML de referências antes de salvar
 
 $files = [
   __DIR__ . '/pro_fill_1_10.php',
@@ -16,22 +16,22 @@ $searchPattern = <<<'PATTERN'
     }
 PATTERN;
 
-// Using consistent whitespace for the replacement
+// Usando espaços consistentes para a substituição
 $replacementBlock = <<<'REPLACEMENT'
     if (isset($examples[$weekNum])) {
         $refs = require __DIR__ . '/references_data.php';
-        $refData = $refs[$weekNum] ?? ['url' => 'https://www.php.net/manual/pt_BR/', 'title' => 'Official Documentation', 'snippet' => '// Custom snippet'];
+        $refData = $refs[$weekNum] ?? ['url' => 'https://www.php.net/manual/pt_BR/', 'title' => 'Documentação Oficial', 'snippet' => '// Snippet personalizado'];
         
         $injectionHtml = '
 <div class="info-box references-section" style="margin-top: 40px; border-left-color: #007BFF;">
-    <h3 style="margin-top:0;">References & Official Documentation</h3>
+    <h3 style="margin-top:0;">Referências & Documentação Oficial</h3>
     <ul>
-        <li><a href="' . htmlspecialchars($refData['url']) . '" target="_blank">PHP Manual: ' . htmlspecialchars($refData['title']) . '</a></li>
+        <li><a href="' . htmlspecialchars($refData['url']) . '" target="_blank">Manual do PHP: ' . htmlspecialchars($refData['title']) . '</a></li>
     </ul>
 </div>
 
 <div class="content-box snippets-section" style="background: var(--hover-bg); margin-top:20px;">
-    <h3 style="margin-top:0;">Useful Snippets</h3>
+    <h3 style="margin-top:0;">Snippets Úteis</h3>
     <pre style="margin:0;"><code>' . htmlspecialchars($refData['snippet']) . '</code></pre>
 </div>
 ';
@@ -54,24 +54,24 @@ foreach ($files as $file) {
 
   $content = file_get_contents($file);
 
-  // Check if it already has been patched
+  // Verifica se já foi patcheado
   if (strpos($content, '$injectionHtml') !== false) {
-    echo "File already patched: " . basename($file) . "\n";
+    echo "Arquivo já patcheado: " . basename($file) . "\n";
     continue;
   }
 
-  // Use regex to tolerate different indentations
+  // Usa regex para tolerar diferentes indentações
   $pattern = '/\s*if\s*\(\s*isset\(\$examples\[\$weekNum\]\)\s*\)\s*\{\s*file_put_contents\(\$dir\s*\.\s*\'\/example_1\.php\',\s*\$examples\[\$weekNum\]\[\'ex1\'\]\);\s*file_put_contents\(\$dir\s*\.\s*\'\/example_2\.php\',\s*\$examples\[\$weekNum\]\[\'ex2\'\]\);\s*\}/';
 
   $newContent = preg_replace($pattern, "\n" . $replacementBlock, $content);
 
   if ($content !== $newContent && $newContent !== null) {
     file_put_contents($file, $newContent);
-    echo "Patched successfully: " . basename($file) . "\n";
+    echo "Patcheado com sucesso: " . basename($file) . "\n";
     $successCount++;
   } else {
-    echo "Pattern not found in: " . basename($file) . "\n";
+    echo "Padrão não encontrado em: " . basename($file) . "\n";
   }
 }
 
-echo "Total patched: $successCount\n";
+echo "Total patcheado: $successCount\n";

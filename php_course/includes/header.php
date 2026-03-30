@@ -33,6 +33,6 @@ $pageTitle = $pageTitle ?? "PHP Professional Course";
     <div class="container">
         <header>
             <h1><?= htmlspecialchars($pageTitle) ?></h1>
-            <p class="subtitle">Interactive PHP Execution Environment</p>
+            <p class="subtitle">Ambiente Interativo de Execução PHP</p>
         </header>
         <main>

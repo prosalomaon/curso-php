@@ -31,6 +31,7 @@ $title = htmlspecialchars(basename($file));
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?= $title ?> - PHP Course</title>
+  <title><?= $title ?> - Curso de PHP</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -39,7 +40,7 @@ $title = htmlspecialchars(basename($file));
   <div class="container">
     <header>
       <h1><?= $title ?></h1>
-      <p class="subtitle"><a href="index.php">← Back to Course Navigation</a></p>
+      <p class="subtitle"><a href="index.php">← Voltar para a Navegação do Curso</a></p>
     </header>
 
     <main class="markdown-content">

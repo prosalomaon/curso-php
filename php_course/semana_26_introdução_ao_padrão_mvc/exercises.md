@@ -1,0 +1,10 @@
+# Exercícios para a Semana 26: Introdução ao Padrão MVC
+
+## Exercício 1
+Escreva um script PHP básico que explore os fundamentos de Introdução ao Padrão MVC. Certifique-se de comentar seu código para explicar o que você está fazendo.
+
+## Exercício 2
+Pegue o conceito central de Introdução ao Padrão MVC e integre-o ao CMS de Blog Avançado. Como essa parte da linguagem ajuda a construir o projeto?
+
+## Desafio Bônus
+Refatore `example_2.php` para lidar com casos de borda ou entradas inválidas de forma graciosa.

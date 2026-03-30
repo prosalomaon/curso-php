@@ -11,7 +11,7 @@ $examples = [
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 1: PHP Syntax & Architecture";
+$pageTitle = "Semana 1: Sintaxe & Arquitetura PHP";
 $systemVersion = phpversion();
 $serverSoftware = $_SERVER['SERVER_SOFTWARE'] ?? 'Unknown CLI';
 $currentDate = date('Y-m-d H:i:s');
@@ -21,20 +21,20 @@ require_once __DIR__ . '/../includes/header.php';
 ?>
 <!-- START PRESENTATION -->
 <div class="content-box">
-    <h2>Welcome to the Professional Environment</h2>
-    <p>PHP gives us incredible flexibility to interact with server configuration dynamically.</p>
+    <h2>Bem-vindo ao Ambiente Profissional</h2>
+    <p>O PHP nos dá uma flexibilidade incrível para interagir com a configuração do servidor dinamicamente.</p>
 </div>
 
 <div class="info-box">
-    <strong>System Properties Loaded Separately:</strong>
+    <strong>Propriedades do Sistema Carregadas Separadamente:</strong>
     <ul>
-        <li><strong>PHP Engine Version:</strong> <?= htmlspecialchars($systemVersion) ?></li>
-        <li><strong>Web Server:</strong> <?= htmlspecialchars($serverSoftware) ?></li>
-        <li><strong>Execution Timestamp:</strong> <?= htmlspecialchars($currentDate) ?></li>
+        <li><strong>Versão do Motor PHP:</strong> <?= htmlspecialchars($systemVersion) ?></li>
+        <li><strong>Servidor Web:</strong> <?= htmlspecialchars($serverSoftware) ?></li>
+        <li><strong>Timestamp de Execução:</strong> <?= htmlspecialchars($currentDate) ?></li>
     </ul>
 </div>
 
-<p><em>Notice how clean this source code is compared to legacy echo statements!</em></p>
+<p><em>Veja como este código-fonte é limpo comparado às instruções echo legadas!</em></p>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
 EOT,
         'ex2' => <<<'EOT'
@@ -42,13 +42,13 @@ EOT,
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 1 Project: Dynamic Bio Page";
+$pageTitle = "Projeto Semana 1: Página de Bio Dinâmica";
 
 // Initializing state for our frontend app
 $profile = [
     'name' => 'Jane Doe',
-    'profession' => 'Senior Backend Engineer',
-    'skills' => ['PHP 8', 'Architecture', 'CSS Design', 'Database Modeling'],
+    'profession' => 'Engenheira Backend Sênior',
+    'skills' => ['PHP 8', 'Arquitetura', 'CSS Design', 'Modelagem de Dados'],
     'available_for_hire' => true
 ];
 // --- END LOGIC ---
@@ -61,7 +61,7 @@ require_once __DIR__ . '/../includes/header.php';
     <p style="text-transform: uppercase; font-weight: bold; color: #555;"><?= htmlspecialchars($profile['profession']) ?></p>
     <hr>
     
-    <h3>Core Competencies:</h3>
+    <h3>Competências Principais:</h3>
     <ul>
         <?php foreach ($profile['skills'] as $skill): ?>
             <li><?= htmlspecialchars($skill) ?></li>
@@ -70,11 +70,11 @@ require_once __DIR__ . '/../includes/header.php';
 
     <?php if ($profile['available_for_hire']): ?>
         <div class="success-box">
-            <strong>Open to Work:</strong> Currently accepting new architectural contracts.
+            <strong>Disponível para Trabalho:</strong> Atualmente aceitando novos contratos de arquitetura.
         </div>
     <?php else: ?>
         <div class="error-box">
-            <strong>Unavailable:</strong> Currently fully booked on major projects.
+            <strong>Indisponível:</strong> Atualmente com a agenda lotada em grandes projetos.
         </div>
     <?php endif; ?>
 </div>
@@ -87,14 +87,14 @@ EOT
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 2: Scalar Types & Memory in PHP 8";
+$pageTitle = "Semana 2: Tipos Escalares & Memória no PHP 8";
 
 $dataTypes = [
-    ['type' => 'Integer', 'value' => 404, 'check' => is_int(404)],
-    ['type' => 'Float', 'value' => 3.14159, 'check' => is_float(3.14159)],
-    ['type' => 'String', 'value' => "Interpolated Data", 'check' => is_string("Interpolated Data")],
-    ['type' => 'Boolean', 'value' => true, 'check' => is_bool(true)],
-    ['type' => 'Null', 'value' => null, 'check' => is_null(null)]
+    ['type' => 'Inteiro', 'value' => 404, 'check' => is_int(404)],
+    ['type' => 'Flutuante', 'value' => 3.14159, 'check' => is_float(3.14159)],
+    ['type' => 'String', 'value' => "Dados Interpolados", 'check' => is_string("Interpolated Data")],
+    ['type' => 'Booleano', 'value' => true, 'check' => is_bool(true)],
+    ['type' => 'Nulo', 'value' => null, 'check' => is_null(null)]
 ];
 // --- END LOGIC ---
 
@@ -102,16 +102,16 @@ require_once __DIR__ . '/../includes/header.php';
 ?>
 <!-- START PRESENTATION -->
 <div class="content-box">
-    <h2>Memory Layout and Scalars</h2>
-    <p>PHP uses the Zend Engine engine to allocate memory dynamically, but we should enforce strict types in professional codebases to prevent coercion flaws.</p>
+    <h2>Layout de Memória e Escalares</h2>
+    <p>O PHP usa o motor Zend Engine para alocar memória dinamicamente, mas devemos impor tipos estritos em bases de código profissionais para evitar falhas de coerção.</p>
 </div>
 
 <table>
     <thead>
         <tr>
-            <th>Data Type Name</th>
-            <th>Raw Script Value</th>
-            <th>Strict Type Check Passed?</th>
+            <th>Nome do Tipo de Dado</th>
+            <th>Valor Bruto do Script</th>
+            <th>Verificação de Tipo Estrito Passou?</th>
         </tr>
     </thead>
     <tbody>
@@ -119,7 +119,7 @@ require_once __DIR__ . '/../includes/header.php';
         <tr>
             <td><strong><?= htmlspecialchars($var['type']) ?></strong></td>
             <td><code><?= htmlspecialchars(var_export($var['value'], true)) ?></code></td>
-            <td><?= $var['check'] ? '<span style="color:green">YES</span>' : '<span style="color:red">NO</span>' ?></td>
+            <td><?= $var['check'] ? '<span style="color:green">SIM</span>' : '<span style="color:red">NÃO</span>' ?></td>
         </tr>
         <?php endforeach; ?>
     </tbody>
@@ -131,7 +131,7 @@ EOT,
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 2 Project: Web App Form Challenge";
+$pageTitle = "Projeto Semana 2: Desafio de Formulário Web App";
 $message = null;
 $error = null;
 
@@ -141,11 +141,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // Strict typing logic evaluation
     if (strtolower($submittedAnswer) === 'elephant') {
-        $message = "Correct! The PHP mascot is indeed the elePHPant!";
+        $message = "Correto! O mascote do PHP é de fato o elePHPant!";
     } else if (empty($submittedAnswer)) {
-        $error = "You left the answer blank!";
+        $error = "Você deixou a resposta em branco!";
     } else {
-        $error = "'{$submittedAnswer}' is incorrect. Think gray and heavy.";
+        $error = "'{$submittedAnswer}' está incorreto. Pense em algo cinza e pesado.";
     }
 }
 // --- END LOGIC ---
@@ -154,8 +154,8 @@ require_once __DIR__ . '/../includes/header.php';
 ?>
 <!-- START PRESENTATION -->
 <div class="content-box">
-    <h2>Interactive Developer Quiz</h2>
-    <p>Using <code>$_POST</code> separated entirely from the View template!</p>
+    <h2>Quiz Interativo para Desenvolvedores</h2>
+    <p>Usando <code>$_POST</code> separado inteiramente do template da View!</p>
 </div>
 
 <?php if ($message): ?>
@@ -163,14 +163,14 @@ require_once __DIR__ . '/../includes/header.php';
 <?php endif; ?>
 
 <?php if ($error): ?>
-    <div class="error-box"><strong>Failure:</strong> <?= htmlspecialchars($error) ?></div>
+    <div class="error-box"><strong>Falha:</strong> <?= htmlspecialchars($error) ?></div>
 <?php endif; ?>
 
 <form method="POST" class="content-box" style="background:var(--hover-bg);">
-    <label for="answer"><strong>Question:</strong> What animal is the official mascot of the PHP language?</label>
-    <input type="text" id="answer" name="answer" placeholder="Type your answer here..." autocomplete="off">
+    <label for="answer"><strong>Pergunta:</strong> Qual animal é o mascote oficial da linguagem PHP?</label>
+    <input type="text" id="answer" name="answer" placeholder="Digite sua resposta aqui..." autocomplete="off">
     
-    <button type="submit">Validate Answer</button>
+    <button type="submit">Validar Resposta</button>
 </form>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
@@ -182,38 +182,38 @@ EOT
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 3: The Match Expression & Strictness";
+$pageTitle = "Semana 3: A Expressão Match & Estrito";
 
 $httpCode = 404;
 
-// PHP 8 'match' expression is cleaner than switch, returns a value, and uses strict === comparison!
+// A expressão 'match' do PHP 8 é mais limpa que o switch, retorna um valor e usa comparação estrita ===!
 $responseMeaning = match($httpCode) {
-    200, 201 => "Success: Application processing finished gracefully.",
-    400 => "Client Error: Bad Request generated by invalid input.",
-    403 => "Security Lockout: Access is strictly forbidden.",
-    404 => "Routing Error: Missing resource.",
-    500 => "Critical Infrastructure Failure.",
-    default => "Unknown HTTP status."
+    200, 201 => "Sucesso: O processamento da aplicação terminou graciosamente.",
+    400 => "Erro do Cliente: Requisição Inválida gerada por entrada inválida.",
+    403 => "Bloqueio de Segurança: O acesso é estritamente proibido.",
+    404 => "Erro de Roteamento: Recurso ausente.",
+    500 => "Falha Crítica na Infraestrutura.",
+    default => "Status HTTP desconhecido."
 };
 // --- END LOGIC ---
 
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="content-box">
-    <h2>Server Response Handler</h2>
-    <p>Evaluating standard server codes using the PHP 8+ strict <code>match()</code> structure.</p>
+    <h2>Manipulador de Resposta do Servidor</h2>
+    <p>Avaliando códigos de servidor padrão usando a estrutura estrita <code>match()</code> do PHP 8+.</p>
 </div>
 
 <div class="info-box">
-    <strong>Simulated Traffic:</strong> Returning HTTP <code><?= htmlspecialchars((string)$httpCode) ?></code><br>
-    <strong>System Diagnosis:</strong> <?= htmlspecialchars($responseMeaning) ?>
+    <strong>Tráfego Simulado:</strong> Retornando HTTP <code><?= htmlspecialchars((string)$httpCode) ?></code><br>
+    <strong>Diagnóstico do Sistema:</strong> <?= htmlspecialchars($responseMeaning) ?>
 </div>
 
-<h3>Strict vs Loose Comparison Hazards</h3>
+<h3>Perigos das Comparações Estritas vs Soltas</h3>
 <table>
-    <tr><th>Condition</th><th>Loose (==)</th><th>Strict (===)</th></tr>
-    <tr><td><code>"" == 0</code></td><td><span style="color:red">TRUE (Bad)</span></td><td><span style="color:green">FALSE (Safe)</span></td></tr>
-    <tr><td><code>"123" == 123</code></td><td><span style="color:red">TRUE</span></td><td><span style="color:green">FALSE</span></td></tr>
+    <tr><th>Condição</th><th>Solta (==)</th><th>Estrita (===)</th></tr>
+    <tr><td><code>"" == 0</code></td><td><span style="color:red">VERDADEIRO (Ruim)</span></td><td><span style="color:green">FALSO (Seguro)</span></td></tr>
+    <tr><td><code>"123" == 123</code></td><td><span style="color:red">VERDADEIRO</span></td><td><span style="color:green">FALSO</span></td></tr>
 </table>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
 EOT,
@@ -222,7 +222,7 @@ EOT,
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 3 Project: Content Security Gate";
+$pageTitle = "Projeto Semana 3: Portão de Segurança de Conteúdo";
 $gateStatus = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -231,13 +231,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $subscribe = isset($_POST['subscribe']); // Checkbox presence
 
     if ($age === false) {
-        $gateStatus = ['status' => 'error', 'msg' => 'Invalid integer provided for age.'];
+        $gateStatus = ['status' => 'error', 'msg' => 'Inteiro inválido fornecido para a idade.'];
     } elseif ($age < 18) {
-        $gateStatus = ['status' => 'error', 'msg' => 'Access Denied: You must be 18 or older to view the professional network.'];
+        $gateStatus = ['status' => 'error', 'msg' => 'Acesso Negado: Você deve ter 18 anos ou mais para visualizar a rede profissional.'];
     } elseif (!$subscribe) {
-        $gateStatus = ['status' => 'info', 'msg' => 'Access Granted, but please consider subscribing to our tech newsletter!'];
+        $gateStatus = ['status' => 'info', 'msg' => 'Acesso Concedido, mas por favor considere assinar nossa newsletter técnica!'];
     } else {
-        $gateStatus = ['status' => 'success', 'msg' => 'Access Granted: Welcome, Pro Member.'];
+        $gateStatus = ['status' => 'success', 'msg' => 'Acesso Concedido: Bem-vindo, Membro Pro.'];
     }
 }
 // --- END LOGIC ---
@@ -245,8 +245,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="content-box">
-    <h2>Infrastructure Authentication Gate</h2>
-    <p>Utilizing compound conditionals and boolean logic securely.</p>
+    <h2>Portão de Autenticação de Infraestrutura</h2>
+    <p>Utilizando condicionais compostas e lógica booleana de forma segura.</p>
 </div>
 
 <?php if ($gateStatus): ?>
@@ -256,15 +256,15 @@ require_once __DIR__ . '/../includes/header.php';
 <?php endif; ?>
 
 <form method="POST" class="content-box">
-    <label><strong>Enter your Age:</strong></label>
+    <label><strong>Digite sua Idade:</strong></label>
     <input type="number" name="age" required min="1" max="120">
     
     <div style="margin-bottom: 20px;">
         <input type="checkbox" name="subscribe" id="sub" value="1">
-        <label for="sub" style="font-weight:bold;">Opt-in to the Professional Technical Newsletter (Agrees to ToS)</label>
+        <label for="sub" style="font-weight:bold;">Inscrever-se na Newsletter Técnica Profissional (Concorda com os Termos)</label>
     </div>
 
-    <button type="submit">Attempt Login</button>
+    <button type="submit">Tentar Login</button>
 </form>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
@@ -276,41 +276,41 @@ EOT
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 4: Advanced Typing and Functions";
+$pageTitle = "Semana 4: Tipagem Avançada e Funções";
 
 /**
- * Calculates a discount. Enforces types strongly.
- * Using Union Types (int|float) available since PHP 8.
+ * Calcula um desconto. Impõe tipos fortemente.
+ * Usando Union Types (int|float) disponível desde o PHP 8.
  */
 function applyDiscount(float|int $price, float $discountRate): float {
     if ($price < 0 || $discountRate < 0) {
-        throw new InvalidArgumentException("Prices and rates cannot be negative.");
+        throw new InvalidArgumentException("Preços e taxas não podem ser negativos.");
     }
     return $price - ($price * $discountRate);
 }
 
 // Data Array for Views
 $products = [
-    ['name' => 'Enterprise Server', 'original' => 1500, 'rate' => 0.15],
-    ['name' => 'Mechanical Keyboard', 'original' => 200, 'rate' => 0.05],
-    ['name' => 'Algorithm E-Book', 'original' => 45, 'rate' => 0.50],
+    ['name' => 'Servidor Corporativo', 'original' => 1500, 'rate' => 0.15],
+    ['name' => 'Teclado Mecânico', 'original' => 200, 'rate' => 0.05],
+    ['name' => 'E-Book de Algoritmos', 'original' => 45, 'rate' => 0.50],
 ];
 // --- END LOGIC ---
 
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="content-box">
-    <h2>Union Types and Strict Math</h2>
-    <p>Using <code>declare(strict_types=1)</code> ensures no accidental passing of `"150"` (string) instead of `150` (int) down the application stack.</p>
+    <h2>Tipos de União e Matemática Estrita</h2>
+    <p>O uso de <code>declare(strict_types=1)</code> garante que não haja passagem acidental de `"150"` (string) em vez de `150` (int) na pilha da aplicação.</p>
 </div>
 
 <table>
     <thead>
         <tr>
-            <th>Hardware / Asset</th>
-            <th>Original Price</th>
-            <th>Discount Applied</th>
-            <th>Final Cost</th>
+            <th>Hardware / Ativo</th>
+            <th>Preço Original</th>
+            <th>Desconto Aplicado</th>
+            <th>Custo Final</th>
         </tr>
     </thead>
     <tbody>
@@ -333,12 +333,12 @@ EOT,
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 4 Project: Custom String Formatter Tool";
+$pageTitle = "Projeto Semana 4: Ferramenta de Formatação de String Personalizada";
 
 $results = null;
 
 /**
- * A utility class-like function generator to clean user text!
+ * Uma função geradora semelhante a uma classe utilitária para limpar texto do usuário!
  */
 function sanitizeAndFormatText(string $rawInput): array {
     $clean = strip_tags(trim($rawInput)); // Security: strip HTML
@@ -361,23 +361,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="content-box">
-    <h2>Data Formatting Pipeline</h2>
-    <p>Submit any messy string below, and see the engine parse it cleanly via separated functions.</p>
+    <h2>Pipeline de Formatação de Dados</h2>
+    <p>Envie qualquer string bagunçada abaixo e veja o motor processá-la de forma limpa via funções separadas.</p>
 </div>
 
 <form method="POST" class="content-box" style="background:var(--hover-bg);">
-    <label>Paste text here (Try adding HTML like &lt;b&gt;):</label>
+    <label>Cole o texto aqui (Tente adicionar HTML como &lt;b&gt;):</label>
     <textarea name="rawText" rows="4"></textarea>
-    <button type="submit">Process Text</button>
+    <button type="submit">Processar Texto</button>
 </form>
 
 <?php if ($results): ?>
-    <h3>Output Pipeline:</h3>
+    <h3>Pipeline de Saída:</h3>
     <table>
-        <tr><th>Original Payload:</th><td><code><?= htmlspecialchars($results['original']) ?></code></td></tr>
-        <tr><th>Upper Transformation:</th><td><strong><?= htmlspecialchars($results['uppercase']) ?></strong></td></tr>
-        <tr><th>Total Words Parsed:</th><td><?= htmlspecialchars((string)$results['word_count']) ?></td></tr>
-        <tr><th>URL Friendly Slug:</th><td><code><?= htmlspecialchars($results['slug']) ?></code></td></tr>
+        <tr><th>Carga Original:</th><td><code><?= htmlspecialchars($results['original']) ?></code></td></tr>
+        <tr><th>Transformação em Maiúsculas:</th><td><strong><?= htmlspecialchars($results['uppercase']) ?></strong></td></tr>
+        <tr><th>Total de Palavras Processadas:</th><td><?= htmlspecialchars((string)$results['word_count']) ?></td></tr>
+        <tr><th>Slug Amigável para URL:</th><td><code><?= htmlspecialchars($results['slug']) ?></code></td></tr>
     </table>
 <?php endif; ?>
 
@@ -390,26 +390,221 @@ EOT
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 5: Scopes, References, and Statics";
+$pageTitle = "Semana 5: Escopos, Referências e Estáticos";
 
 $counterData = [];
 
-// Static variables REMEMBER their state across function calls within the same script execution!
+// Variáveis estáticas LEMBRAM seu estado entre chamadas de função dentro da mesma execução de script!
 function incrementCounter(string $label): int {
     static $calls = 0; 
     $calls++;
     return $calls;
 }
 
-// Using references (&) allows modifying variables directly in memory!
+// Usar referências (&) permite modificar variáveis diretamente na memória!
+</div>
+
+<h3>Perigos das Comparações Estritas vs Soltas</h3>
+<table>
+    <tr><th>Condição</th><th>Solta (==)</th><th>Estrita (===)</th></tr>
+    <tr><td><code>"" == 0</code></td><td><span style="color:red">VERDADEIRO (Ruim)</span></td><td><span style="color:green">FALSO (Seguro)</span></td></tr>
+    <tr><td><code>"123" == 123</code></td><td><span style="color:red">VERDADEIRO</span></td><td><span style="color:green">FALSO</span></td></tr>
+</table>
+<?php require_once __DIR__ . '/../includes/footer.php'; ?>
+EOT,
+        'ex2' => <<<'EOT'
+<?php
+declare(strict_types=1);
+
+// --- BUSINESS LOGIC ---
+$pageTitle = "Projeto Semana 3: Portão de Segurança de Conteúdo";
+$gateStatus = null;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Validate inputs via robust filters
+    $age = filter_input(INPUT_POST, 'age', FILTER_VALIDATE_INT);
+    $subscribe = isset($_POST['subscribe']); // Checkbox presence
+
+    if ($age === false) {
+        $gateStatus = ['status' => 'error', 'msg' => 'Inteiro inválido fornecido para a idade.'];
+    } elseif ($age < 18) {
+        $gateStatus = ['status' => 'error', 'msg' => 'Acesso Negado: Você deve ter 18 anos ou mais para visualizar a rede profissional.'];
+    } elseif (!$subscribe) {
+        $gateStatus = ['status' => 'info', 'msg' => 'Acesso Concedido, mas por favor considere assinar nossa newsletter técnica!'];
+    } else {
+        $gateStatus = ['status' => 'success', 'msg' => 'Acesso Concedido: Bem-vindo, Membro Pro.'];
+    }
+}
+// --- END LOGIC ---
+
+require_once __DIR__ . '/../includes/header.php';
+?>
+<div class="content-box">
+    <h2>Portão de Autenticação de Infraestrutura</h2>
+    <p>Utilizando condicionais compostas e lógica booleana de forma segura.</p>
+</div>
+
+<?php if ($gateStatus): ?>
+    <div class="<?= htmlspecialchars($gateStatus['status']) ?>-box">
+        <?= htmlspecialchars($gateStatus['msg']) ?>
+    </div>
+<?php endif; ?>
+
+<form method="POST" class="content-box">
+    <label><strong>Digite sua Idade:</strong></label>
+    <input type="number" name="age" required min="1" max="120">
+    
+    <div style="margin-bottom: 20px;">
+        <input type="checkbox" name="subscribe" id="sub" value="1">
+        <label for="sub" style="font-weight:bold;">Inscrever-se na Newsletter Técnica Profissional (Concorda com os Termos)</label>
+    </div>
+
+    <button type="submit">Tentar Login</button>
+</form>
+
+<?php require_once __DIR__ . '/../includes/footer.php'; ?>
+EOT
+    ],
+    4 => [
+        'ex1' => <<<'EOT'
+<?php
+declare(strict_types=1);
+
+// --- BUSINESS LOGIC ---
+$pageTitle = "Semana 4: Tipagem Avançada e Funções";
+
+/**
+ * Calcula um desconto. Impõe tipos fortemente.
+ * Usando Union Types (int|float) disponível desde o PHP 8.
+ */
+function applyDiscount(float|int $price, float $discountRate): float {
+    if ($price < 0 || $discountRate < 0) {
+        throw new InvalidArgumentException("Preços e taxas não podem ser negativos.");
+    }
+    return $price - ($price * $discountRate);
+}
+
+// Data Array for Views
+$products = [
+    ['name' => 'Servidor Corporativo', 'original' => 1500, 'rate' => 0.15],
+    ['name' => 'Teclado Mecânico', 'original' => 200, 'rate' => 0.05],
+    ['name' => 'E-Book de Algoritmos', 'original' => 45, 'rate' => 0.50],
+];
+// --- END LOGIC ---
+
+require_once __DIR__ . '/../includes/header.php';
+?>
+<div class="content-box">
+    <h2>Tipos de União e Matemática Estrita</h2>
+    <p>O uso de <code>declare(strict_types=1)</code> garante que não haja passagem acidental de `"150"` (string) em vez de `150` (int) na pilha da aplicação.</p>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>Hardware / Ativo</th>
+            <th>Preço Original</th>
+            <th>Desconto Aplicado</th>
+            <th>Custo Final</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($products as $p): ?>
+        <tr>
+            <td><strong><?= htmlspecialchars($p['name']) ?></strong></td>
+            <td>$<?= number_format((float)$p['original'], 2) ?></td>
+            <td><?= $p['rate'] * 100 ?>% OFF</td>
+            <td style="color: green; font-weight: bold;">
+                $<?= number_format(applyDiscount($p['original'], $p['rate']), 2) ?>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+<?php require_once __DIR__ . '/../includes/footer.php'; ?>
+EOT,
+        'ex2' => <<<'EOT'
+<?php
+declare(strict_types=1);
+
+// --- BUSINESS LOGIC ---
+$pageTitle = "Projeto Semana 4: Ferramenta de Formatação de String Personalizada";
+
+$results = null;
+
+/**
+ * Uma função geradora semelhante a uma classe utilitária para limpar texto do usuário!
+ */
+function sanitizeAndFormatText(string $rawInput): array {
+    $clean = strip_tags(trim($rawInput)); // Security: strip HTML
+    return [
+        'original' => $rawInput,
+        'uppercase' => strtoupper($clean),
+        'word_count' => str_word_count($clean),
+        'slug' => strtolower(str_replace(' ', '-', $clean))
+    ];
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $input = $_POST['rawText'] ?? '';
+    if (!empty($input)) {
+        $results = sanitizeAndFormatText($input);
+    }
+}
+// --- END LOGIC ---
+
+require_once __DIR__ . '/../includes/header.php';
+?>
+<div class="content-box">
+    <h2>Pipeline de Formatação de Dados</h2>
+    <p>Envie qualquer string bagunçada abaixo e veja o motor processá-la de forma limpa via funções separadas.</p>
+</div>
+
+<form method="POST" class="content-box" style="background:var(--hover-bg);">
+    <label>Cole o texto aqui (Tente adicionar HTML como &lt;b&gt;):</label>
+    <textarea name="rawText" rows="4"></textarea>
+    <button type="submit">Processar Texto</button>
+</form>
+
+<?php if ($results): ?>
+    <h3>Pipeline de Saída:</h3>
+    <table>
+        <tr><th>Carga Original:</th><td><code><?= htmlspecialchars($results['original']) ?></code></td></tr>
+        <tr><th>Transformação em Maiúsculas:</th><td><strong><?= htmlspecialchars($results['uppercase']) ?></strong></td></tr>
+        <tr><th>Total de Palavras Processadas:</th><td><?= htmlspecialchars((string)$results['word_count']) ?></td></tr>
+        <tr><th>Slug Amigável para URL:</th><td><code><?= htmlspecialchars($results['slug']) ?></code></td></tr>
+    </table>
+<?php endif; ?>
+
+<?php require_once __DIR__ . '/../includes/footer.php'; ?>
+EOT
+    ],
+    5 => [
+        'ex1' => <<<'EOT'
+<?php
+declare(strict_types=1);
+
+// --- BUSINESS LOGIC ---
+$pageTitle = "Semana 5: Escopos, Referências e Estáticos";
+
+$counterData = [];
+
+// Variáveis estáticas LEMBRAM seu estado entre chamadas de função dentro da mesma execução de script!
+function incrementCounter(string $label): int {
+    static $calls = 0; 
+    $calls++;
+    return $calls;
+}
+
+// Usar referências (&) permite modificar variáveis diretamente na memória!
 $globalTitle = "App Name";
 function renameApp(string &$appRef, string $newName): void {
     $appRef = strtoupper($newName); 
 }
 
-$counterData[] = "Call 1 -> Returned: " . incrementCounter("X");
-$counterData[] = "Call 2 -> Returned: " . incrementCounter("X");
-$counterData[] = "Call 3 -> Returned: " . incrementCounter("X");
+$counterData[] = "Chamada 1 -> Retornou: " . incrementCounter("X");
+$counterData[] = "Chamada 2 -> Retornou: " . incrementCounter("X");
+$counterData[] = "Chamada 3 -> Retornou: " . incrementCounter("X");
 
 $before = $globalTitle;
 renameApp($globalTitle, "Awesome ETEC Platform");
@@ -419,22 +614,22 @@ $after = $globalTitle;
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="content-box">
-    <h2>Memory Modification Strategies</h2>
+    <h2>Estratégias de Modificação de Memória</h2>
 </div>
 
-<h3>Static Function Variables:</h3>
-<p>Unlike normal local variables which reset when the function ends, <code>static</code> remembers its value.</p>
+<h3>Variáveis de Função Estáticas:</h3>
+<p>Ao contrário das variáveis locais normais que reiniciam quando a função termina, <code>static</code> lembra seu valor.</p>
 <pre>
 <?php foreach ($counterData as $log): ?>
 <?= htmlspecialchars($log) . "\n" ?>
 <?php endforeach; ?>
 </pre>
 
-<h3>Passing by Reference:</h3>
-<p>Passing a variable with <code>&amp;</code> allows the function to mutate the original property memory space.</p>
+<h3>Passagem por Referência:</h3>
+<p>Passar uma variável com <code>&amp;</code> permite que a função altere o espaço de memória da propriedade original.</p>
 <table style="width:50%;">
-    <tr><th>State Before:</th><td><code><?= htmlspecialchars($before) ?></code></td></tr>
-    <tr><th>State After:</th><td><strong><?= htmlspecialchars($after) ?></strong></td></tr>
+    <tr><th>Estado Antes:</th><td><code><?= htmlspecialchars($before) ?></code></td></tr>
+    <tr><th>Estado Depois:</th><td><strong><?= htmlspecialchars($after) ?></strong></td></tr>
 </table>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
 EOT,
@@ -446,7 +641,7 @@ declare(strict_types=1);
 // We simulate cross-request global state using Sessions!
 session_start();
 
-$pageTitle = "Week 5 Project: Advanced Session Scoping Matrix";
+$pageTitle = "Projeto Semana 5: Matriz de Escopo de Sessão Avançada";
 
 // Setup state
 if (!isset($_SESSION['player_score'])) {
@@ -467,25 +662,25 @@ $currentScore = $_SESSION['player_score'];
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="content-box">
-    <h2>Persistent Scoping Server</h2>
-    <p>PHP scripts die when the page loads. To keep data alive globally across requests, we hook into <code>$_SESSION</code>.</p>
+    <h2>Servidor de Escopo Persistente</h2>
+    <p>Scripts PHP morrem quando a página carrega. Para manter os dados vivos globalmente entre as requisições, utilizamos <code>$_SESSION</code>.</p>
 </div>
 
 <div class="info-box" style="text-align: center;">
-    <h3>CURRENT APPLICATION STATE:</h3>
+    <h3>ESTADO ATUAL DA APLICAÇÃO:</h3>
     <h1 style="font-size: 4em; margin:10px 0; color:var(--text-color);"><?= htmlspecialchars((string)$currentScore) ?></h1>
-    <p>Your session ID: <code><?= htmlspecialchars(session_id()) ?></code></p>
+    <p>Seu ID de sessão: <code><?= htmlspecialchars(session_id()) ?></code></p>
 </div>
 
 <div style="display:flex; gap:10px; justify-content:center;">
     <form method="POST">
         <input type="hidden" name="action" value="score">
-        <button type="submit" style="background:#155724; border-color:#155724;">+10 Score Points</button>
+        <button type="submit" style="background:#155724; border-color:#155724;">+10 Pontos de Pontuação</button>
     </form>
     
     <form method="POST">
         <input type="hidden" name="action" value="reset">
-        <button type="submit" style="background:#721c24; border-color:#721c24;">Hard Reset Core</button>
+        <button type="submit" style="background:#721c24; border-color:#721c24;">Reset Total do Sistema</button>
     </form>
 </div>
 
@@ -498,7 +693,7 @@ EOT
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 6: Complex Arrays & Deconstruction";
+$pageTitle = "Semana 6: Arrays Complexos & Desestruturação";
 
 $frameworks = ['Laravel', 'Symfony', 'CodeIgniter'];
 $authConfig = [
@@ -508,7 +703,7 @@ $authConfig = [
     'routes' => ['/api/user', '/api/admin']
 ];
 
-// PHP 7.1+ Array Destructuring! Very clean syntax.
+// Desestruturação de Array do PHP 7.1+! Sintaxe muito limpa.
 [$fw1, $fw2] = $frameworks;
 
 // Associative Destructuring
@@ -521,25 +716,25 @@ $newFrameworks = ['Phalcon', ...$frameworks, 'Slim'];
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="content-box">
-    <h2>Modern Array Architecture</h2>
-    <p>Arrays are foundational in PHP. Let's look at advanced destructuring.</p>
+    <h2>Arquitetura Moderna de Arrays</h2>
+    <p>Arrays são fundamentais no PHP. Vamos olhar para a desestruturação avançada.</p>
 </div>
 
-<h3>List Assignment Destructuring:</h3>
+<h3>Desestruturação de Atribuição de Lista:</h3>
 <div class="success-box">
-    Grabbed directly off the array memory layout:<br>
-    <strong>Primary:</strong> <?= htmlspecialchars($fw1) ?> <br>
-    <strong>Secondary:</strong> <?= htmlspecialchars($fw2) ?> 
+    Capturado diretamente do layout de memória do array:<br>
+    <strong>Primário:</strong> <?= htmlspecialchars($fw1) ?> <br>
+    <strong>Secundário:</strong> <?= htmlspecialchars($fw2) ?> 
 </div>
 
-<h3>Extracted Map Variables:</h3>
-<p>Variables <code>$drv</code> and <code>$lt</code> created instantly from the hash map keys:</p>
+<h3>Variáveis de Mapa Extraídas:</h3>
+<p>Variáveis <code>$drv</code> e <code>$lt</code> criadas instantaneamente a partir das chaves do mapa:</p>
 <ul>
-    <li>Driver Engine: <strong><?= htmlspecialchars($drv) ?></strong></li>
-    <li>Session Lifetime: <strong><?= htmlspecialchars((string)$lt) ?>s</strong></li>
+    <li>Motor de Driver: <strong><?= htmlspecialchars($drv) ?></strong></li>
+    <li>Tempo de Vida da Sessão: <strong><?= htmlspecialchars((string)$lt) ?>s</strong></li>
 </ul>
 
-<h3>Array Spread Merging (...):</h3>
+<h3>Mesclagem de Array Spread (...):</h3>
 <pre><?= htmlspecialchars(print_r($newFrameworks, true)) ?></pre>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
@@ -549,13 +744,13 @@ EOT,
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 6 Project: Task List Application";
+$pageTitle = "Projeto Semana 6: Aplicativo de Lista de Tarefas";
 
 // Simple state
 $tasks = [
-    'Critical Error Patch',
-    'Write Authentication API',
-    'Design Login Modal Forms'
+    'Patch de Erro Crítico',
+    'Escrever API de Autenticação',
+    'Design de Formulários de Login'
 ];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['new_task'])) {
@@ -569,19 +764,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['new_task'])) {
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="content-box">
-    <h2>Volatile Task Queue</h2>
-    <p>Using arrays to track state (Resets on refresh since we aren't using Session or DB yet).</p>
+    <h2>Fila de Tarefas Volátil</h2>
+    <p>Usando arrays para rastrear o estado (Reinicia ao atualizar, pois ainda não estamos usando Sessão ou Banco de Dados).</p>
 </div>
 
 <form method="POST" class="content-box" style="background:var(--hover-bg);">
-    <label>New System Feature Request:</label>
+    <label>Nova Solicitação de Funcionalidade do Sistema:</label>
     <div style="display:flex; gap:10px;">
         <input type="text" name="new_task" style="margin-bottom:0;" autocomplete="off" required>
-        <button type="submit" style="white-space:nowrap;">Queue Task</button>
+        <button type="submit" style="white-space:nowrap;">Enfileirar Tarefa</button>
     </div>
 </form>
 
-<h3>Pending System Queue:</h3>
+<h3>Fila do Sistema Pendente:</h3>
 <ul>
     <?php foreach ($tasks as $index => $item): ?>
     <li style="padding:10px; border-bottom:1px dashed var(--border-color);">
@@ -599,7 +794,7 @@ EOT
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 7: Multidimensional Data Architecture";
+$pageTitle = "Semana 7: Arquitetura de Dados Multidimensionais";
 
 // Simulating a parsed JSON API response
 $databaseRaw = [
@@ -622,26 +817,26 @@ foreach ($databaseRaw['users'] as $user) {
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="content-box">
-    <h2>Deep Matrix Navigation</h2>
-    <p>How do we parse deeper level arrays representing Database Joins or JSON bodies?</p>
+    <h2>Navegação em Matriz Profunda</h2>
+    <p>Como analisamos arrays de nível mais profundo representando Joins de Banco de Dados ou corpos JSON?</p>
 </div>
 
 <div style="display:flex; gap:20px; flex-wrap:wrap;">
     <div style="flex:1; min-width:300px;">
-        <h3>Incoming Payload:</h3>
+        <h3>Carga de Entrada:</h3>
         <pre><?= htmlspecialchars(print_r($databaseRaw, true)) ?></pre>
     </div>
     
     <div style="flex:1; min-width:300px;">
-        <h3>Filtered Results (HR Tag):</h3>
+        <h3>Resultados Filtrados (Tag RH):</h3>
         <?php if (empty($hrPersonnel)): ?>
-            <p>No HR personnel found.</p>
+            <p>Nenhum pessoal de RH encontrado.</p>
         <?php else: ?>
             <ul>
             <?php foreach ($hrPersonnel as $hr): ?>
                 <li>
-                    <strong>Found ID:</strong> <?= $hr['id'] ?> <br>
-                    <strong>Clearance:</strong> <?= strtoupper($hr['role']) ?>
+                    <strong>ID Encontrado:</strong> <?= $hr['id'] ?> <br>
+                    <strong>Nível de Acesso:</strong> <?= strtoupper($hr['role']) ?>
                 </li>
             <?php endforeach; ?>
             </ul>
@@ -655,7 +850,7 @@ EOT,
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 7 Project: Analytics Dashboard Engine";
+$pageTitle = "Projeto Semana 7: Motor de Dashboard de Analytics";
 
 // Huge dataset representing daily visitors across platforms
 $analytics = [
@@ -680,13 +875,13 @@ foreach ($analytics as $date => $metrics) {
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="content-box">
-    <h2>Aggregated Traffic Intelligence</h2>
-    <p>Using multi-dimensional mapping to summarize terabytes of log data.</p>
+    <h2>Inteligência de Tráfego Agregada</h2>
+    <p>Usando mapeamento multidimensional para resumir terabytes de dados de log.</p>
 </div>
 
 <table>
     <thead>
-        <tr><th>Timestamp</th><th>Web Route</th><th>iOS Route</th><th>Android Route</th><th>Day Total</th></tr>
+        <tr><th>Timestamp</th><th>Rota Web</th><th>Rota iOS</th><th>Rota Android</th><th>Total do Dia</th></tr>
     </thead>
     <tbody>
         <?php foreach ($analytics as $date => $metrics): ?>
@@ -702,7 +897,7 @@ require_once __DIR__ . '/../includes/header.php';
     </tbody>
     <tfoot>
         <tr style="background:var(--hover-bg);">
-            <td><strong>TOTAL SUMMARY</strong></td>
+            <td><strong>RESUMO TOTAL</strong></td>
             <td><strong><?= $totals['web'] ?></strong></td>
             <td><strong><?= $totals['ios'] ?></strong></td>
             <td><strong><?= $totals['android'] ?></strong></td>
@@ -720,13 +915,13 @@ EOT
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 8: Advanced Iterator Loops";
+$pageTitle = "Semana 8: Loops de Iteradores Avançados";
 
-// In real applications, massive DB queries shouldn't be loaded into memory.
-// Generators use the `yield` keyword to spit out items efficiently!
+// Em aplicações reais, consultas massivas de banco de dados não devem ser carregadas na memória.
+// Generadores usam a palavra-chave `yield` para cuspir itens de forma eficiente!
 function generateCpuSpike(int $limit): Generator {
     for ($i = 1; $i <= $limit; $i++) {
-        // Yield pauses exactly here and gives memory to the frontend
+        // O Yield faz uma pausa exatamente aqui e libera memória para o frontend
         yield $i => rand(1000, 9999);
     }
 }
@@ -741,13 +936,13 @@ $endMemory = memory_get_usage();
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="content-box">
-    <h2>Loop Memory Management (The Yield Iterator)</h2>
-    <p>If you build an API pulling 5 million records into an array, the server crashes. We loop iterators using <code>yield</code> instead.</p>
+    <h2>Gerenciamento de Memória de Loop (O Iterador Yield)</h2>
+    <p>Se você construir uma API puxando 5 milhões de registros para um array, o servidor trava. Percorremos iteradores usando <code>yield</code> em vez disso.</p>
 </div>
 
 <div class="info-box">
-    <strong>Memory Setup Cost:</strong> <?= $endMemory - $startMemory ?> bytes.<br>
-    <em>Because the loop hasn't run yet, RAM usage is almost zero!</em>
+    <strong>Custo de Configuração de Memória:</strong> <?= $endMemory - $startMemory ?> bytes.<br>
+    <em>Como o loop ainda não rodou, o uso de RAM é quase zero!</em>
 </div>
 
 <div style="height:200px; overflow-y:scroll; border:1px solid var(--border-color); padding:10px; background:#fff;">
@@ -763,7 +958,7 @@ EOT,
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 8 Project: HTML Table Visualizer Tool";
+$pageTitle = "Projeto Semana 8: Ferramenta Visualizadora de Tabela HTML";
 
 $gridSize = 0;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -776,25 +971,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="content-box">
-    <h2>Dynamic Multi-Iteration Matrix Render</h2>
+    <h2>Renderização de Matriz de Multi-Iteração Dinâmica</h2>
 </div>
 
 <form method="POST" class="content-box" style="background:var(--hover-bg);">
-    <label>Generate a matrix grid safely up to 20x20:</label>
+    <label>Gere uma grade de matriz com segurança até 20x20:</label>
     <div style="display:flex; gap:10px;">
         <input type="number" name="grid" min="1" max="20" required value="<?= $gridSize ?: 5 ?>">
-        <button type="submit" style="white-space:nowrap;">Build Grid Layout</button>
+        <button type="submit" style="white-space:nowrap;">Construir Layout de Grade</button>
     </div>
 </form>
 
 <?php if ($gridSize > 0): ?>
-    <h3>Live Render:</h3>
+    <h3>Renderização ao Vivo:</h3>
     <table style="text-align:center;">
         <?php for ($row = 1; $row <= $gridSize; $row++): ?>
             <tr>
                 <?php for ($col = 1; $col <= $gridSize; $col++): ?>
                     <?php 
-                        // Highlighting the diagonal line
+                        // Destacando a linha diagonal
                         $isDiagonal = ($row === $col);
                         $bg = $isDiagonal ? 'var(--text-color)' : 'transparent';
                         $color = $isDiagonal ? 'var(--bg-color)' : 'var(--text-color)';
@@ -817,9 +1012,9 @@ EOT
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 9: Control Flow (Break & Continue)";
+$pageTitle = "Semana 9: Fluxo de Controle (Break & Continue)";
 
-// Network timeout simulation list
+// Lista de simulação de timeout de rede
 $networkRequests = [
     ['ip' => '192.168.1.1', 'status' => 'success', 'time' => 12],
     ['ip' => '192.168.1.2', 'status' => 'timeout', 'time' => 5000],
@@ -831,33 +1026,33 @@ $networkRequests = [
 $logs = [];
 foreach ($networkRequests as $req) {
     if ($req['status'] === 'timeout') {
-        $logs[] = "[WARNING] Skipping Server {$req['ip']} - Timeout.";
-        continue; // Skip the rest of this singular loop block, move to next!
+        $logs[] = "[AVISO] Pulando Servidor {$req['ip']} - Timeout.";
+        continue; // Pula o resto deste bloco de loop singular, vai para o próximo!
     }
     
     if ($req['status'] === 'FATAL_KERNEL_PANIC') {
-        $logs[] = "[CRITICAL] Entire deployment aborted due to Kernel Panic on {$req['ip']}.";
-        break; // Destroys the entire foreach loop instantly!
+        $logs[] = "[CRÍTICO] Implantação total abortada devido a Kernel Panic em {$req['ip']}.";
+        break; // Destrói o loop foreach inteiro instantaneamente!
     }
     
-    $logs[] = "[OK] Pinging {$req['ip']} finished in {$req['time']}ms.";
+    $logs[] = "[OK] Pinging {$req['ip']} concluído em {$req['time']}ms.";
 }
 // --- END LOGIC ---
 
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="content-box">
-    <h2>Command Structure Breaks</h2>
-    <p>Controlling large data loops gracefully.</p>
+    <h2>Estrutura de Interrupção de Comandos</h2>
+    <p>Controlando loops de grandes volumes de dados de forma graciosa.</p>
 </div>
 
-<h3>Deployment Engine Output Log:</h3>
+<h3>Log de Saída do Motor de Implantação:</h3>
 <ul style="list-style-type:none; padding:0;">
     <?php foreach ($logs as $logStr): ?>
         <?php
             $color = 'var(--text-color)';
-            if (str_contains($logStr, '[WARNING]')) $color = 'orange';
-            if (str_contains($logStr, '[CRITICAL]')) $color = 'red';
+            if (str_contains($logStr, '[AVISO]')) $color = 'orange';
+            if (str_contains($logStr, '[CRÍTICO]')) $color = 'red';
         ?>
         <li style="color:<?= $color ?>; font-weight:bold; margin-bottom:10px;">
             <?= htmlspecialchars($logStr) ?>
@@ -865,7 +1060,7 @@ require_once __DIR__ . '/../includes/header.php';
     <?php endforeach; ?>
 </ul>
 
-<div class="error-box">Notice how <code>192.168.1.5</code> was never pinged because we broke the loop early.</div>
+<div class="error-box">Observe como <code>192.168.1.5</code> nunca foi pingado porque interrompemos o loop antecipadamente.</div>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
 EOT,
@@ -874,7 +1069,7 @@ EOT,
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 9 Project: Security Search Protocol";
+$pageTitle = "Projeto Semana 9: Protocolo de Busca de Segurança";
 
 $userDatabase = [
     'alice@example.com', 'admin@example.com', 'bob@example.com', 
@@ -887,42 +1082,42 @@ $searchedPaths = 0;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($searchTerm)) {
     foreach ($userDatabase as $index => $email) {
-        $searchedPaths++; // Keep track of how many rows we looked at
+        $searchedPaths++; // Acompanha quantas linhas olhamos
         
         if ($email === $searchTerm) {
-            $searchResult = "FOUND User ID #$index for $email";
-            break; // IMMEDIATE OPTIMIZATION. Don't check the rest of the array!
+            $searchResult = "Usuário ID #$index ENCONTRADO para $email";
+            break; // OTIMIZAÇÃO IMEDIATA. Não verifica o resto do array!
         }
     }
-    if (!$searchResult) $searchResult = "FAILED: User $searchTerm not found.";
+    if (!$searchResult) $searchResult = "FALHA: Usuário $searchTerm não encontrado.";
 }
 // --- END LOGIC ---
 
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="content-box">
-    <h2>Optimized Array Searching</h2>
-    <p>Using <code>break</code> to prevent unnecessary CPU cycles in search protocols.</p>
+    <h2>Busca Otimizada em Array</h2>
+    <p>Usando <code>break</code> para evitar ciclos desnecessários de CPU em protocolos de busca.</p>
 </div>
 
 <form method="POST" class="content-box" style="background:var(--hover-bg);">
-    <label>Find specific User Email (Bob, Alice, Admin...):</label>
+    <label>Encontrar E-mail de Usuário específico (Bob, Alice, Admin...):</label>
     <div style="display:flex; gap:10px;">
         <input type="text" name="email" required autocomplete="off">
-        <button type="submit" style="white-space:nowrap;">Run Database Check</button>
+        <button type="submit" style="white-space:nowrap;">Executar Verificação no Banco de Dados</button>
     </div>
 </form>
 
 <?php if ($_SERVER['REQUEST_METHOD'] === 'POST'): ?>
-    <?php if (str_starts_with($searchResult, 'FOUND')): ?>
+    <?php if (str_starts_with($searchResult, 'Usuário')): ?>
         <div class="success-box"><?= htmlspecialchars($searchResult) ?></div>
     <?php else: ?>
         <div class="error-box"><?= htmlspecialchars($searchResult) ?></div>
     <?php endif; ?>
     
     <div class="info-box">
-        <strong>Engine Metrics:</strong> Searched exactly <strong><?= $searchedPaths ?></strong> rows before stopping algorithm execution.<br>
-        <em>If we didn't use break, it would have scanned all 5 rows every time!</em>
+        <strong>Métricas do Motor:</strong> Pesquisou exatamente <strong><?= $searchedPaths ?></strong> linhas antes de parar a execução do algoritmo.<br>
+        <em>Se não tivéssemos usado o break, ele teria varrido todas as 5 linhas todas as vezes!</em>
     </div>
 <?php endif; ?>
 
@@ -935,18 +1130,18 @@ EOT
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 10: Higher-Order Array Functions";
+$pageTitle = "Semana 10: Funções de Array de Ordem Superior";
 
-// Raw API Data
+// Dados Brutos da API
 $prices = [10.50, 42.00, 5.25, 100.00];
 
-// 1. array_map (Modifying every element) -> Applying $5 Shipping to all
+// 1. array_map (Modificando cada elemento) -> Aplicando $5 de Frete para todos
 $withShipping = array_map(fn($price) => $price + 5.00, $prices);
 
-// 2. array_filter (Removing elements) -> Keeping only items above $20
+// 2. array_filter (Removendo elementos) -> Mantendo apenas itens acima de $20
 $expensiveItems = array_filter($prices, fn($price) => $price > 20.00);
 
-// 3. array_reduce (Boiling down to one value) -> Summing the cart total
+// 3. array_reduce (Resumindo em um único valor) -> Somando o total do carrinho
 $cartTotal = array_reduce($prices, fn($carry, $price) => $carry + $price, 0.0);
 
 // --- END LOGIC ---
@@ -954,12 +1149,12 @@ $cartTotal = array_reduce($prices, fn($carry, $price) => $carry + $price, 0.0);
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="content-box">
-    <h2>Functional Programming Mechanics</h2>
-    <p>PHP has incredibly powerful higher-order functions that eliminate the need for writing raw <code>foreach</code> loops manually.</p>
+    <h2>Mecânica de Programação Funcional</h2>
+    <p>O PHP tem funções de ordem superior incrivelmente poderosas que eliminam a necessidade de escrever loops <code>foreach</code> brutos manualmente.</p>
 </div>
 
 <table>
-    <tr><th>Raw Prices ($)</th><th>Map (+5 Shipping)</th><th>Filter (Only > $20)</th></tr>
+    <tr><th>Preços Brutos ($)</th><th>Mapa (+5 Frete)</th><th>Filtro (Apenas > $20)</th></tr>
     <tr>
         <td><pre><?= htmlspecialchars(print_r($prices, true)) ?></pre></td>
         <td><pre><?= htmlspecialchars(print_r($withShipping, true)) ?></pre></td>
@@ -968,7 +1163,7 @@ require_once __DIR__ . '/../includes/header.php';
 </table>
 
 <div class="success-box" style="text-align: center;">
-    <h3>Final Cart Reduce Total:</h3>
+    <h3>Total Final Reduzido do Carrinho:</h3>
     <h1>$<?= number_format($cartTotal, 2) ?></h1>
 </div>
 
@@ -979,9 +1174,9 @@ EOT,
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Week 10 Project: Complex Database Filters";
+$pageTitle = "Projeto Semana 10: Filtros de Banco de Dados Complexos";
 
-// Simulated complex SQL Joins into an architecture array
+// Simulação de SQL Joins complexos em um array de arquitetura
 $tasks = [
     ['id' => 1, 'priority' => 'high', 'completed' => true, 'tag' => 'auth'],
     ['id' => 2, 'priority' => 'low', 'completed' => false, 'tag' => 'ui'],
@@ -989,11 +1184,11 @@ $tasks = [
     ['id' => 4, 'priority' => 'medium', 'completed' => false, 'tag' => 'auth'],
 ];
 
-// Chain them: Find all INCOMPLETE tasks, then grab ONLY their TAG names as a clean list!
+// Encadeando: Encontrar todas as tarefas INCOMPLETAS e então pegar APENAS seus nomes de TAG como uma lista limpa!
 $pendingTasks = array_filter($tasks, fn($t) => !$t['completed']);
 $pendingTags  = array_map(fn($t) => strtoupper($t['tag']), $pendingTasks);
 
-// Make the tags unique using another built in
+// Tornar as tags únicas usando outra função nativa
 $uniquePendingTags = array_unique($pendingTags);
 
 // --- END LOGIC ---
@@ -1001,25 +1196,25 @@ $uniquePendingTags = array_unique($pendingTags);
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="content-box">
-    <h2>Data Pipeline Architecture</h2>
-    <p>In highly advanced architectures, we chain filter/map actions to isolate exact data slices from complex structures.</p>
+    <h2>Arquitetura de Pipeline de Dados</h2>
+    <p>Em arquiteturas altamente avançadas, encadeamos ações de filtro/mapa para isolar fatias exatas de dados de estruturas complexas.</p>
 </div>
 
 <div style="display:flex; gap:20px; flex-wrap:wrap;">
     
     <div class="content-box" style="flex:1;">
-        <h3>Original Data Struct:</h3>
+        <h3>Estrutura de Dados Original:</h3>
         <pre><?= htmlspecialchars(var_export($tasks, true)) ?></pre>
     </div>
     
     <div class="info-box" style="flex:1;">
-        <h3>Actionable Pipeline Output:</h3>
-        <p>The system needs to know which departments owe work. We filtered completed tasks out, grouped their keys, and removed duplicates instantly natively:</p>
+        <h3>Saída de Pipeline Acionável:</h3>
+        <p>O sistema precisa saber quais departamentos devem trabalho. Filtramos as tarefas concluídas, agrupamos suas chaves e removemos duplicatas instantaneamente de forma nativa:</p>
         
         <ul style="margin-top:20px;">
             <?php foreach ($uniquePendingTags as $deptCode): ?>
                 <li style="font-weight:bold; color:red; margin-bottom:10px;">
-                    WORK PENDING IN MODULE: [<?= htmlspecialchars($deptCode) ?>]
+                    TRABALHO PENDENTE NO MÓDULO: [<?= htmlspecialchars($deptCode) ?>]
                 </li>
             <?php endforeach; ?>
         </ul>
@@ -1032,25 +1227,25 @@ EOT
     ]
 ];
 
-$dirs = array_filter(glob(__DIR__ . '/week_*'), 'is_dir');
+$dirs = array_filter(glob(__DIR__ . '/semana_*'), 'is_dir');
 foreach ($dirs as $dir) {
-    preg_match('/week_0*(\d+)/', basename($dir), $matches);
+    preg_match('/semana_0*(\d+)/', basename($dir), $matches);
     if (!isset($matches[1])) continue;
     $weekNum = (int)$matches[1];
     if (isset($examples[$weekNum])) {
         $refs = require __DIR__ . '/references_data.php';
-        $refData = $refs[$weekNum] ?? ['url' => 'https://www.php.net/manual/pt_BR/', 'title' => 'Official Documentation', 'snippet' => '// Custom snippet'];
+        $refData = $refs[$weekNum] ?? ['url' => 'https://www.php.net/manual/pt_BR/', 'title' => 'Documentação Oficial', 'snippet' => '// Snippet personalizado'];
         
         $injectionHtml = '
 <div class="info-box references-section" style="margin-top: 40px; border-left-color: #007BFF;">
-    <h3 style="margin-top:0;">References & Official Documentation</h3>
+    <h3 style="margin-top:0;">Referências & Documentação Oficial</h3>
     <ul>
-        <li><a href="' . htmlspecialchars($refData['url']) . '" target="_blank">PHP Manual: ' . htmlspecialchars($refData['title']) . '</a></li>
+        <li><a href="' . htmlspecialchars($refData['url']) . '" target="_blank">Manual do PHP: ' . htmlspecialchars($refData['title']) . '</a></li>
     </ul>
 </div>
 
 <div class="content-box snippets-section" style="background: var(--hover-bg); margin-top:20px;">
-    <h3 style="margin-top:0;">Useful Snippets</h3>
+    <h3 style="margin-top:0;">Snippets Úteis</h3>
     <pre style="margin:0;"><code>' . htmlspecialchars($refData['snippet']) . '</code></pre>
 </div>
 ';
@@ -1064,4 +1259,4 @@ foreach ($dirs as $dir) {
         file_put_contents($dir . '/example_2.php', $ex2);
     }
 }
-echo "Professional Layouts generated & applied to Weeks 1-10.\n";
+echo "Layouts Profissionais gerados & aplicados às Semanas 1-10.\n";
