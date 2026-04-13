@@ -56,6 +56,32 @@ require_once __DIR__ . '/../includes/header.php';
     <li><?= htmlspecialchars($result2) ?></li>
 </ul>
 
+<div class="content-box">
+    <h3>Arquitetura de Objetos (POO)</h3>
+    <p style="margin-bottom:15px; font-style:italic; font-size:0.9em;">A representação acima mostra a estrutura de classes em POO. A classe base <code>Character</code> define os atributos comuns, enquanto <code>Warrior</code> e <code>Mage</code> estendem essa funcionalidade (Herança), permitindo o reuso de código e comportamentos específicos.</p>
+    <div class="mermaid">
+    classDiagram
+        class Character {
+            -string name
+            -int health
+            -int mana
+            +__construct(name, health, mana)
+            +takeDamage(amount)
+            +isAlive() bool
+        }
+        class Warrior {
+            -int stamina
+            +block()
+        }
+        class Mage {
+            -int spellPower
+            +castSpell()
+        }
+        Character <|-- Warrior
+        Character <|-- Mage
+    </div>
+</div>
+
 <div class="info-box">
     <strong>Nota de Arquitetura:</strong> O objeto cumpre o Contrato de Interface, estende o Banco de Dados Abstrato e utiliza a injeção de Trait, tudo de forma impecável!
 </div>

@@ -43,6 +43,29 @@ require_once __DIR__ . '/../includes/header.php';
     <p>O PHP lida com a mecânica da sessão automaticamente, mas requer ajuste fino rigoroso para evitar explorações de Sequestro (Hijacking) e Fixação.</p>
 </div>
 
+<div class="content-box">
+    <h3>Fluxo de Autenticação e Sessão PHP</h3>
+    <p style="margin-bottom:15px; font-style:italic; font-size:0.9em;">Este fluxo de sequência detalha como o PHP mantém o estado do usuário entre diferentes páginas. O servidor gera um Identificador de Sessão único, armazena os dados no disco e usa cookies no navegador para associar o cliente correto aos seus dados na próxima visita.</p>
+    <div class="mermaid">
+    sequenceDiagram
+        participant C as "Navegador (Cliente)"
+        participant S as "Servidor PHP"
+        participant F as "Sistema de Arquivos (Sessão)"
+
+        C->>S: "GET /login.php (Protocolo Sem Cookie)"
+        S->>S: "session_start()"
+        S->>S: "Gerar Session ID"
+        S->>F: "Criar arquivo de sessão (sess_ID)"
+        S->>C: "Resposta + Set-Cookie"
+        Note over C,S: "Próximas requisições enviam o Cookie"
+        C->>S: "GET /dashboard.php (Cookie Identificado)"
+        S->>S: "session_start() - Reuso"
+        S->>F: "Ler dados de sess_ID"
+        F-->>S: "Dados da Sessão Carregados"
+        S->>C: "Renderiza Dashboard Autenticado"
+    </div>
+</div>
+
 <?php foreach ($actionLog as $log): ?>
     <div class="success-box"><?= htmlspecialchars($log) ?></div>
 <?php endforeach; ?>

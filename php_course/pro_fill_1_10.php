@@ -25,6 +25,20 @@ require_once __DIR__ . '/../includes/header.php';
     <p>O PHP nos dá uma flexibilidade incrível para interagir com a configuração do servidor dinamicamente.</p>
 </div>
 
+<div class="content-box">
+    <h3>Arquitetura Cliente-Servidor PHP</h3>
+    <p style="margin-bottom:15px; font-style:italic; font-size:0.9em;">Este diagrama ilustra o ciclo fundamental de uma requisição PHP: o cliente solicita uma página, o servidor processa o script executando lógica e consultas ao banco de dados, e finalmente devolve o HTML pronto para o navegador.</p>
+    <div class="mermaid">
+    flowchart LR
+        A["Navegador (Cliente)"] -->|1. Requisição HTTP| B["Servidor Web (Apache/Nginx)"]
+        B -->|2. Encaminha para| C["Interpretador PHP"]
+        C -->|3. Executa Script| D[("Banco de Dados")]
+        D -->|4. Retorna Dados| C
+        C -->|5. Renderiza HTML| B
+        B -->|6. Resposta HTTP| A
+    </div>
+</div>
+
 <div class="info-box">
     <strong>Propriedades do Sistema Carregadas Separadamente:</strong>
     <ul>
@@ -207,201 +221,6 @@ require_once __DIR__ . '/../includes/header.php';
 <div class="info-box">
     <strong>Tráfego Simulado:</strong> Retornando HTTP <code><?= htmlspecialchars((string)$httpCode) ?></code><br>
     <strong>Diagnóstico do Sistema:</strong> <?= htmlspecialchars($responseMeaning) ?>
-</div>
-
-<h3>Perigos das Comparações Estritas vs Soltas</h3>
-<table>
-    <tr><th>Condição</th><th>Solta (==)</th><th>Estrita (===)</th></tr>
-    <tr><td><code>"" == 0</code></td><td><span style="color:red">VERDADEIRO (Ruim)</span></td><td><span style="color:green">FALSO (Seguro)</span></td></tr>
-    <tr><td><code>"123" == 123</code></td><td><span style="color:red">VERDADEIRO</span></td><td><span style="color:green">FALSO</span></td></tr>
-</table>
-<?php require_once __DIR__ . '/../includes/footer.php'; ?>
-EOT,
-        'ex2' => <<<'EOT'
-<?php
-declare(strict_types=1);
-
-// --- BUSINESS LOGIC ---
-$pageTitle = "Projeto Semana 3: Portão de Segurança de Conteúdo";
-$gateStatus = null;
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Validate inputs via robust filters
-    $age = filter_input(INPUT_POST, 'age', FILTER_VALIDATE_INT);
-    $subscribe = isset($_POST['subscribe']); // Checkbox presence
-
-    if ($age === false) {
-        $gateStatus = ['status' => 'error', 'msg' => 'Inteiro inválido fornecido para a idade.'];
-    } elseif ($age < 18) {
-        $gateStatus = ['status' => 'error', 'msg' => 'Acesso Negado: Você deve ter 18 anos ou mais para visualizar a rede profissional.'];
-    } elseif (!$subscribe) {
-        $gateStatus = ['status' => 'info', 'msg' => 'Acesso Concedido, mas por favor considere assinar nossa newsletter técnica!'];
-    } else {
-        $gateStatus = ['status' => 'success', 'msg' => 'Acesso Concedido: Bem-vindo, Membro Pro.'];
-    }
-}
-// --- END LOGIC ---
-
-require_once __DIR__ . '/../includes/header.php';
-?>
-<div class="content-box">
-    <h2>Portão de Autenticação de Infraestrutura</h2>
-    <p>Utilizando condicionais compostas e lógica booleana de forma segura.</p>
-</div>
-
-<?php if ($gateStatus): ?>
-    <div class="<?= htmlspecialchars($gateStatus['status']) ?>-box">
-        <?= htmlspecialchars($gateStatus['msg']) ?>
-    </div>
-<?php endif; ?>
-
-<form method="POST" class="content-box">
-    <label><strong>Digite sua Idade:</strong></label>
-    <input type="number" name="age" required min="1" max="120">
-    
-    <div style="margin-bottom: 20px;">
-        <input type="checkbox" name="subscribe" id="sub" value="1">
-        <label for="sub" style="font-weight:bold;">Inscrever-se na Newsletter Técnica Profissional (Concorda com os Termos)</label>
-    </div>
-
-    <button type="submit">Tentar Login</button>
-</form>
-
-<?php require_once __DIR__ . '/../includes/footer.php'; ?>
-EOT
-    ],
-    4 => [
-        'ex1' => <<<'EOT'
-<?php
-declare(strict_types=1);
-
-// --- BUSINESS LOGIC ---
-$pageTitle = "Semana 4: Tipagem Avançada e Funções";
-
-/**
- * Calcula um desconto. Impõe tipos fortemente.
- * Usando Union Types (int|float) disponível desde o PHP 8.
- */
-function applyDiscount(float|int $price, float $discountRate): float {
-    if ($price < 0 || $discountRate < 0) {
-        throw new InvalidArgumentException("Preços e taxas não podem ser negativos.");
-    }
-    return $price - ($price * $discountRate);
-}
-
-// Data Array for Views
-$products = [
-    ['name' => 'Servidor Corporativo', 'original' => 1500, 'rate' => 0.15],
-    ['name' => 'Teclado Mecânico', 'original' => 200, 'rate' => 0.05],
-    ['name' => 'E-Book de Algoritmos', 'original' => 45, 'rate' => 0.50],
-];
-// --- END LOGIC ---
-
-require_once __DIR__ . '/../includes/header.php';
-?>
-<div class="content-box">
-    <h2>Tipos de União e Matemática Estrita</h2>
-    <p>O uso de <code>declare(strict_types=1)</code> garante que não haja passagem acidental de `"150"` (string) em vez de `150` (int) na pilha da aplicação.</p>
-</div>
-
-<table>
-    <thead>
-        <tr>
-            <th>Hardware / Ativo</th>
-            <th>Preço Original</th>
-            <th>Desconto Aplicado</th>
-            <th>Custo Final</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach ($products as $p): ?>
-        <tr>
-            <td><strong><?= htmlspecialchars($p['name']) ?></strong></td>
-            <td>$<?= number_format((float)$p['original'], 2) ?></td>
-            <td><?= $p['rate'] * 100 ?>% OFF</td>
-            <td style="color: green; font-weight: bold;">
-                $<?= number_format(applyDiscount($p['original'], $p['rate']), 2) ?>
-            </td>
-        </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table>
-<?php require_once __DIR__ . '/../includes/footer.php'; ?>
-EOT,
-        'ex2' => <<<'EOT'
-<?php
-declare(strict_types=1);
-
-// --- BUSINESS LOGIC ---
-$pageTitle = "Projeto Semana 4: Ferramenta de Formatação de String Personalizada";
-
-$results = null;
-
-/**
- * Uma função geradora semelhante a uma classe utilitária para limpar texto do usuário!
- */
-function sanitizeAndFormatText(string $rawInput): array {
-    $clean = strip_tags(trim($rawInput)); // Security: strip HTML
-    return [
-        'original' => $rawInput,
-        'uppercase' => strtoupper($clean),
-        'word_count' => str_word_count($clean),
-        'slug' => strtolower(str_replace(' ', '-', $clean))
-    ];
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $input = $_POST['rawText'] ?? '';
-    if (!empty($input)) {
-        $results = sanitizeAndFormatText($input);
-    }
-}
-// --- END LOGIC ---
-
-require_once __DIR__ . '/../includes/header.php';
-?>
-<div class="content-box">
-    <h2>Pipeline de Formatação de Dados</h2>
-    <p>Envie qualquer string bagunçada abaixo e veja o motor processá-la de forma limpa via funções separadas.</p>
-</div>
-
-<form method="POST" class="content-box" style="background:var(--hover-bg);">
-    <label>Cole o texto aqui (Tente adicionar HTML como &lt;b&gt;):</label>
-    <textarea name="rawText" rows="4"></textarea>
-    <button type="submit">Processar Texto</button>
-</form>
-
-<?php if ($results): ?>
-    <h3>Pipeline de Saída:</h3>
-    <table>
-        <tr><th>Carga Original:</th><td><code><?= htmlspecialchars($results['original']) ?></code></td></tr>
-        <tr><th>Transformação em Maiúsculas:</th><td><strong><?= htmlspecialchars($results['uppercase']) ?></strong></td></tr>
-        <tr><th>Total de Palavras Processadas:</th><td><?= htmlspecialchars((string)$results['word_count']) ?></td></tr>
-        <tr><th>Slug Amigável para URL:</th><td><code><?= htmlspecialchars($results['slug']) ?></code></td></tr>
-    </table>
-<?php endif; ?>
-
-<?php require_once __DIR__ . '/../includes/footer.php'; ?>
-EOT
-    ],
-    5 => [
-        'ex1' => <<<'EOT'
-<?php
-declare(strict_types=1);
-
-// --- BUSINESS LOGIC ---
-$pageTitle = "Semana 5: Escopos, Referências e Estáticos";
-
-$counterData = [];
-
-// Variáveis estáticas LEMBRAM seu estado entre chamadas de função dentro da mesma execução de script!
-function incrementCounter(string $label): int {
-    static $calls = 0; 
-    $calls++;
-    return $calls;
-}
-
-// Usar referências (&) permite modificar variáveis diretamente na memória!
 </div>
 
 <h3>Perigos das Comparações Estritas vs Soltas</h3>
@@ -798,78 +617,10 @@ $pageTitle = "Semana 7: Arquitetura de Dados Multidimensionais";
 
 // Simulating a parsed JSON API response
 $databaseRaw = [
-    'schema_version' => '1.5',
-    'users' => [
-        ['id' => 10, 'role' => 'dev', 'tags' => ['c#', 'php']],
-        ['id' => 11, 'role' => 'admin', 'tags' => ['hr_manager', 'payroll']]
-    ]
+    '2023-10-01' => ['web' => 1200, 'ios' => 450, 'android' => 380],
+    '2023-10-02' => ['web' => 1400, 'ios' => 500, 'android' => 410],
+    '2023-10-03' => ['web' => 900, 'ios' => 300, 'android' => 310],
 ];
-
-// Rebuilding data structurally via iteration
-$hrPersonnel = [];
-foreach ($databaseRaw['users'] as $user) {
-    if (in_array('hr_manager', $user['tags'])) {
-        $hrPersonnel[] = $user;
-    }
-}
-// --- END LOGIC ---
-
-require_once __DIR__ . '/../includes/header.php';
-?>
-<div class="content-box">
-    <h2>Navegação em Matriz Profunda</h2>
-    <p>Como analisamos arrays de nível mais profundo representando Joins de Banco de Dados ou corpos JSON?</p>
-</div>
-
-<div style="display:flex; gap:20px; flex-wrap:wrap;">
-    <div style="flex:1; min-width:300px;">
-        <h3>Carga de Entrada:</h3>
-        <pre><?= htmlspecialchars(print_r($databaseRaw, true)) ?></pre>
-    </div>
-    
-    <div style="flex:1; min-width:300px;">
-        <h3>Resultados Filtrados (Tag RH):</h3>
-        <?php if (empty($hrPersonnel)): ?>
-            <p>Nenhum pessoal de RH encontrado.</p>
-        <?php else: ?>
-            <ul>
-            <?php foreach ($hrPersonnel as $hr): ?>
-                <li>
-                    <strong>ID Encontrado:</strong> <?= $hr['id'] ?> <br>
-                    <strong>Nível de Acesso:</strong> <?= strtoupper($hr['role']) ?>
-                </li>
-            <?php endforeach; ?>
-            </ul>
-        <?php endif; ?>
-    </div>
-</div>
-<?php require_once __DIR__ . '/../includes/footer.php'; ?>
-EOT,
-        'ex2' => <<<'EOT'
-<?php
-declare(strict_types=1);
-
-// --- BUSINESS LOGIC ---
-$pageTitle = "Projeto Semana 7: Motor de Dashboard de Analytics";
-
-// Huge dataset representing daily visitors across platforms
-$analytics = [
-    '2026-10-01' => ['web' => 450, 'ios' => 200, 'android' => 310],
-    '2026-10-02' => ['web' => 520, 'ios' => 215, 'android' => 305],
-    '2026-10-03' => ['web' => 490, 'ios' => 250, 'android' => 340],
-];
-
-// Logic engine to boil it down into actionable insights
-$totals = ['web' => 0, 'ios' => 0, 'android' => 0, 'global' => 0];
-
-foreach ($analytics as $date => $metrics) {
-    $totals['web'] += $metrics['web'];
-    $totals['ios'] += $metrics['ios'];
-    $totals['android'] += $metrics['android'];
-    
-    // Total aggregate for the day
-    $totals['global'] += ($metrics['web'] + $metrics['ios'] + $metrics['android']);
-}
 // --- END LOGIC ---
 
 require_once __DIR__ . '/../includes/header.php';
@@ -884,27 +635,53 @@ require_once __DIR__ . '/../includes/header.php';
         <tr><th>Timestamp</th><th>Rota Web</th><th>Rota iOS</th><th>Rota Android</th><th>Total do Dia</th></tr>
     </thead>
     <tbody>
-        <?php foreach ($analytics as $date => $metrics): ?>
-            <?php $dayTotal = array_sum($metrics); ?>
-            <tr>
-                <td><strong><?= htmlspecialchars($date) ?></strong></td>
-                <td><?= $metrics['web'] ?></td>
-                <td><?= $metrics['ios'] ?></td>
-                <td><?= $metrics['android'] ?></td>
-                <td style="font-weight:bold;"><?= $dayTotal ?></td>
-            </tr>
+        <?php foreach ($databaseRaw as $date => $metrics): ?>
+        <tr>
+            <td><code><?= $date ?></code></td>
+            <td><?= number_format((float)$metrics['web']) ?></td>
+            <td><?= number_format((float)$metrics['ios']) ?></td>
+            <td><?= number_format((float)$metrics['android']) ?></td>
+            <td><strong><?= number_format((float)array_sum($metrics)) ?></strong></td>
+        </tr>
         <?php endforeach; ?>
     </tbody>
-    <tfoot>
-        <tr style="background:var(--hover-bg);">
-            <td><strong>RESUMO TOTAL</strong></td>
-            <td><strong><?= $totals['web'] ?></strong></td>
-            <td><strong><?= $totals['ios'] ?></strong></td>
-            <td><strong><?= $totals['android'] ?></strong></td>
-            <td style="color:var(--text-color); font-size:1.2em;"><strong><?= $totals['global'] ?></strong></td>
-        </tr>
-    </tfoot>
 </table>
+<?php require_once __DIR__ . '/../includes/footer.php'; ?>
+EOT,
+        'ex2' => <<<'EOT'
+<?php
+declare(strict_types=1);
+
+// --- BUSINESS LOGIC ---
+$pageTitle = "Projeto Semana 7: Gerador de Matriz de Pixels";
+
+$matrix = [];
+$size = 8; // 8x8 Grid
+
+for ($row = 0; $row < $size; $row++) {
+    for ($col = 0; $col < $size; $col++) {
+        // Gera um brilho aleatório para cada pixel
+        $matrix[$row][$col] = rand(0, 255);
+    }
+}
+// --- END LOGIC ---
+
+require_once __DIR__ . '/../includes/header.php';
+?>
+<div class="content-box">
+    <h2>Processamento de Matriz Aninhada</h2>
+    <p>Útil para desenvolvimento de jogos, filtragem de imagem ou renderização de mapas de dados!</p>
+</div>
+
+<div style="display:grid; grid-template-columns: repeat(<?= $size ?>, 40px); gap:2px; justify-content:center; background:#000; padding:10px; border-radius:8px;">
+    <?php foreach ($matrix as $row): ?>
+        <?php foreach ($row as $pixel): ?>
+            <div style="width:40px; height:40px; background:rgb(<?= "$pixel, 120, $pixel" ?>); border:1px solid rgba(255,255,255,0.1);"></div>
+        <?php endforeach; ?>
+    <?php endforeach; ?>
+</div>
+
+<p style="text-align:center; margin-top:10px;"><em>Matriz 8x8 gerada dinamicamente via loops <code>for</code> aninhados.</em></p>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
 EOT
@@ -915,39 +692,37 @@ EOT
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Semana 8: Loops de Iteradores Avançados";
+$pageTitle = "Semana 8: Algoritmos de Iteração (While vs Do-While)";
 
-// Em aplicações reais, consultas massivas de banco de dados não devem ser carregadas na memória.
-// Generadores usam a palavra-chave `yield` para cuspir itens de forma eficiente!
-function generateCpuSpike(int $limit): Generator {
-    for ($i = 1; $i <= $limit; $i++) {
-        // O Yield faz uma pausa exatamente aqui e libera memória para o frontend
-        yield $i => rand(1000, 9999);
-    }
+$backupNodes = ['Server-A', 'Server-B', 'Server-C'];
+$statusLog = [];
+
+// Exemplo While: Tentar até que a condição falhe (pode nunca rodar!)
+while (!empty($backupNodes)) {
+    $node = array_shift($backupNodes);
+    $statusLog[] = "Sincronizando: $node... [CONCLUÍDO]";
 }
 
-$startMemory = memory_get_usage();
-$generator = generateCpuSpike(100);
-// At this exact line, PHP hasn't used any memory to hold the 100 random numbers!
-$endMemory = memory_get_usage();
-
+// Exemplo Do-While: Roda pelo menos UMA VEZ!
+$retryCount = 0;
+$maxRetries = 3;
+do {
+    $retryCount++;
+    $connectionResult = ($retryCount === 3) ? "ESTABELECIDA" : "FALHA";
+    $statusLog[] = "Tentativa de Conexão #$retryCount: $connectionResult";
+} while ($connectionResult !== "ESTABELECIDA" && $retryCount < $maxRetries);
 // --- END LOGIC ---
 
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="content-box">
-    <h2>Gerenciamento de Memória de Loop (O Iterador Yield)</h2>
-    <p>Se você construir uma API puxando 5 milhões de registros para um array, o servidor trava. Percorremos iteradores usando <code>yield</code> em vez disso.</p>
+    <h2>Controle de Fluxo de Iteração</h2>
+    <p>Escolher o laço correto impacta a segurança e performance da aplicação.</p>
 </div>
 
-<div class="info-box">
-    <strong>Custo de Configuração de Memória:</strong> <?= $endMemory - $startMemory ?> bytes.<br>
-    <em>Como o loop ainda não rodou, o uso de RAM é quase zero!</em>
-</div>
-
-<div style="height:200px; overflow-y:scroll; border:1px solid var(--border-color); padding:10px; background:#fff;">
-    <?php foreach ($generator as $index => $randomNumber): ?>
-        <code>[ID:<?= str_pad((string)$index, 3, '0', STR_PAD_LEFT) ?>] Hash: <?= $randomNumber ?></code><br>
+<div class="info-box" style="font-family:monospace;">
+    <?php foreach ($statusLog as $line): ?>
+        <?= htmlspecialchars($line) ?><br>
     <?php endforeach; ?>
 </div>
 
@@ -958,41 +733,31 @@ EOT,
 declare(strict_types=1);
 
 // --- BUSINESS LOGIC ---
-$pageTitle = "Projeto Semana 8: Ferramenta Visualizadora de Tabela HTML";
+$pageTitle = "Projeto Semana 8: Gerador de Tabela de Multiplicação Pro";
 
-$gridSize = 0;
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $gridSize = filter_input(INPUT_POST, 'grid', FILTER_VALIDATE_INT) ?: 0;
-    // Hard limit to avoid user crashing the PHP script
-    $gridSize = min($gridSize, 20); 
-}
+$limit = filter_input(INPUT_GET, 'limit', FILTER_VALIDATE_INT) ?: 5;
 // --- END LOGIC ---
 
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <div class="content-box">
-    <h2>Renderização de Matriz de Multi-Iteração Dinâmica</h2>
+    <h2>Visualizador de Algoritmos Matemáticos</h2>
+    <form method="GET">
+        <label>Alterar tamanho da grade (Max 15):</label>
+        <input type="number" name="limit" value="<?= $limit ?>" min="1" max="15">
+        <button type="submit">Regerar Grade</button>
+    </form>
 </div>
 
-<form method="POST" class="content-box" style="background:var(--hover-bg);">
-    <label>Gere uma grade de matriz com segurança até 20x20:</label>
-    <div style="display:flex; gap:10px;">
-        <input type="number" name="grid" min="1" max="20" required value="<?= $gridSize ?: 5 ?>">
-        <button type="submit" style="white-space:nowrap;">Construir Layout de Grade</button>
-    </div>
-</form>
-
-<?php if ($gridSize > 0): ?>
-    <h3>Renderização ao Vivo:</h3>
-    <table style="text-align:center;">
-        <?php for ($row = 1; $row <= $gridSize; $row++): ?>
+<?php if ($limit > 0): ?>
+    <table>
+        <?php for ($row = 1; $row <= $limit; $row++): ?>
             <tr>
-                <?php for ($col = 1; $col <= $gridSize; $col++): ?>
+                <?php for ($col = 1; $col <= $limit; $col++): ?>
                     <?php 
-                        // Destacando a linha diagonal
-                        $isDiagonal = ($row === $col);
-                        $bg = $isDiagonal ? 'var(--text-color)' : 'transparent';
-                        $color = $isDiagonal ? 'var(--bg-color)' : 'var(--text-color)';
+                        $val = $row * $col;
+                        $bg = ($row === $col) ? 'var(--hover-bg)' : 'transparent';
+                        $color = ($row === $col) ? 'var(--text-color)' : 'inherit';
                     ?>
                     <td style="background:<?= $bg ?>; color:<?= $color ?>; border:1px solid var(--border-color); padding:5px;">
                         <?= $row ?>x<?= $col ?>
@@ -1151,6 +916,26 @@ require_once __DIR__ . '/../includes/header.php';
 <div class="content-box">
     <h2>Mecânica de Programação Funcional</h2>
     <p>O PHP tem funções de ordem superior incrivelmente poderosas que eliminam a necessidade de escrever loops <code>foreach</code> brutos manualmente.</p>
+</div>
+
+<div class="content-box">
+    <h3>Hierarquia de Escopo e Memória</h3>
+    <p style="margin-bottom:15px; font-style:italic; font-size:0.9em;">O diagrama acima visualiza como o PHP isola diferentes níveis de memória. O Escopo Global armazena dados persistentes e superglobais, enquanto o Escopo de Função garante que variáveis locais não interfiram em outras partes do sistema (isolamento).</p>
+    <div class="mermaid">
+    flowchart TD
+        subgraph GlobalScope ["Escopo Global"]
+            G1["globalVar"]
+            G2["_SESSION"]
+        end
+        GlobalScope --> LocalScope
+        subgraph LocalScope ["Escopo da Função"]
+            Iso["Isolamento"]
+            L1["localVar"]
+            L2["Parâmetros"]
+            S1["static keepState"]
+        end
+        style LocalScope fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    </div>
 </div>
 
 <table>

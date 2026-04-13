@@ -513,6 +513,20 @@ require_once __DIR__ . '/../includes/header.php';
     <p>O PHP alimenta APIs globais perfeitamente apenas alterando os cabeçalhos de resposta e interrompendo a saída HTML.</p>
 </div>
 
+<div class="content-box">
+    <h3>Arquitetura de API REST</h3>
+    <p style="margin-bottom:15px; font-style:italic; font-size:0.9em;">Este diagrama mostra como uma API REST funciona como uma ponte: ela recebe requisições JSON de clientes remotos (como apps móveis), processa os dados de forma isolada do HTML e retorna respostas padronizadas com códigos de status HTTP apropriados.</p>
+    <div class="mermaid">
+    flowchart LR
+        A["Cliente (Mobile/SPA)"] -->|1. Requisição JSON| B["API Gateway PHP"]
+        B -->|2. Valida Token/Auth| C["Router"]
+        C -->|3. Executa Controller| D["Model/DB"]
+        D -->|4. Retorna Dados| C
+        C -->|5. Formata JSON| B
+        B -->|6. Resposta HTTP 200/201| A
+    </div>
+</div>
+
 <div class="info-box">
     <a href="?api=fetch" style="color:#0c5460; font-weight:bold;">
         [ CLIQUE AQUI PARA VER A CARGA ÚTIL DA API NO NAVEGADOR ]

@@ -16,6 +16,20 @@ require_once __DIR__ . '/../includes/header.php';
     <p>O PHP nos dá uma flexibilidade incrível para interagir com a configuração do servidor dinamicamente.</p>
 </div>
 
+<div class="content-box">
+    <h3>Arquitetura Cliente-Servidor PHP</h3>
+    <p style="margin-bottom:15px; font-style:italic; font-size:0.9em;">Este diagrama ilustra o ciclo fundamental de uma requisição PHP: o cliente solicita uma página, o servidor processa o script executando lógica e consultas ao banco de dados, e finalmente devolve o HTML pronto para o navegador.</p>
+    <div class="mermaid">
+    flowchart LR
+        A["Navegador (Cliente)"] -->|1. Requisição HTTP| B["Servidor Web (Apache/Nginx)"]
+        B -->|2. Encaminha para| C["Interpretador PHP"]
+        C -->|3. Executa Script| D[("Banco de Dados")]
+        D -->|4. Retorna Dados| C
+        C -->|5. Renderiza HTML| B
+        B -->|6. Resposta HTTP| A
+    </div>
+</div>
+
 <div class="info-box">
     <strong>Propriedades do Sistema Carregadas Separadamente:</strong>
     <ul>

@@ -22,6 +22,20 @@ require_once __DIR__ . '/../includes/header.php';
     <p>Seu código PHP cresceu. O MVC é o padrão global para manter grandes bases de código sustentáveis, dividindo explicitamente os domínios.</p>
 </div>
 
+<div class="content-box">
+    <h3>Fluxo da Arquitetura MVC</h3>
+    <p style="margin-bottom:15px; font-style:italic; font-size:0.9em;">O padrão MVC organiza o código em três camadas: o Roteador direciona a URL, o Controller coordena a lógica, o Model gerencia os dados do banco, e a View cuida apenas da apresentação final ao usuário.</p>
+    <div class="mermaid">
+    flowchart TD
+        User(("Usuário")) -->|Interação/URL| Router["Roteador"]
+        Router -->|Despacha| Controller["Controlador"]
+        Controller -->|Pede Dados| Model["Model"]
+        Model -->|Retorna Dados| Controller
+        Controller -->|Injeta Dados| View["View"]
+        View -->|Renderiza HTML| User
+    </div>
+</div>
+
 <h3>A Matriz do Ciclo de Vida:</h3>
 <pre><?= htmlspecialchars($architectureFlow) ?></pre>
 

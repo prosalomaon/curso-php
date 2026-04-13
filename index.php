@@ -19,16 +19,16 @@ $course_path = "php_course";
 
   <div class="container">
     <header>
-      <h1>PHP: Do Zero ao Herói</h1>
+      <h1>PHP: Do Zero ao Sênior</h1>
       <p class="subtitle">Currículo Técnico Completo do Curso</p>
     </header>
 
     <main>
-      <?php 
+      <?php
       $directories = array_filter(glob(__DIR__ . '/' . $course_path . '/semana_*'), 'is_dir');
       natsort($directories);
-      if (empty($directories)): 
-      ?>
+      if (empty($directories)):
+        ?>
         <div class="week-container">
           <p>Nenhuma pasta semanal foi encontrada neste diretório.</p>
         </div>

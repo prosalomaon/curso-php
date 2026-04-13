@@ -25,6 +25,26 @@ require_once __DIR__ . '/../includes/header.php';
     <p>O PHP tem funções de ordem superior incrivelmente poderosas que eliminam a necessidade de escrever loops <code>foreach</code> brutos manualmente.</p>
 </div>
 
+<div class="content-box">
+    <h3>Hierarquia de Escopo e Memória</h3>
+    <p style="margin-bottom:15px; font-style:italic; font-size:0.9em;">O diagrama acima visualiza como o PHP isola diferentes níveis de memória. O Escopo Global armazena dados persistentes e superglobais, enquanto o Escopo de Função garante que variáveis locais não interfiram em outras partes do sistema (isolamento).</p>
+    <div class="mermaid">
+    flowchart TD
+        subgraph GlobalScope ["Escopo Global"]
+            G1["globalVar"]
+            G2["_SESSION"]
+        end
+        GlobalScope --> LocalScope
+        subgraph LocalScope ["Escopo da Função"]
+            Iso["Isolamento"]
+            L1["localVar"]
+            L2["Parâmetros"]
+            S1["static keepState"]
+        end
+        style LocalScope fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    </div>
+</div>
+
 <table>
     <tr><th>Preços Brutos ($)</th><th>Mapa (+5 Frete)</th><th>Filtro (Apenas > $20)</th></tr>
     <tr>
